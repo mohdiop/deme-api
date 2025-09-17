@@ -3,13 +3,19 @@ package com.mohdiop.deme_api.entity;
 import com.mohdiop.deme_api.entity.enumeration.UserRole;
 import com.mohdiop.deme_api.entity.enumeration.UserState;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User {
@@ -17,9 +23,10 @@ public abstract class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String userPhone;
 
+    @Column(unique = true)
     private String userEmail;
 
     @Column(nullable = false)
@@ -35,7 +42,7 @@ public abstract class User {
     private Set<UserRole> userRoles;
 
     @Column(nullable = false)
-    private LocalDateTime userCreatedAt = LocalDateTime.now();
+    private LocalDateTime userCreatedAt;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
