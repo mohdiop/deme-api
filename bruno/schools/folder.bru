@@ -1,0 +1,16 @@
+meta {
+  name: schools
+  seq: 2
+}
+
+auth {
+  mode: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwidHlwZSI6IkFDQ0VTU19UT0tFTiIsInJvbGVzIjpbIlJPTEVfU0NIT09MIl0sImlhdCI6MTc1ODIxNjEyMCwiZXhwIjoxNzU4MjE3MDIwfQ.SdXuIZHFmnqKyMBnPXuHXvL2euMYpw2ztZk2keaEjic
+}
+
+vars:pre-request {
+  schoolUrl: {{baseUrl}}/schools
+}

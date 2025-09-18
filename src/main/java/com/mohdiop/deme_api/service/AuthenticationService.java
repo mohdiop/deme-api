@@ -8,6 +8,7 @@ import com.mohdiop.deme_api.repository.UserRepository;
 import com.mohdiop.deme_api.security.JwtService;
 import io.jsonwebtoken.JwtException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -101,5 +102,9 @@ public class AuthenticationService {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("Erreur lors du hash du token.", e);
         }
+    }
+
+    public Long getCurrentUserId() {
+        return Long.valueOf(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
     }
 }

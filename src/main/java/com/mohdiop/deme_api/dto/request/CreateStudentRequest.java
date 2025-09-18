@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.List;
 
 public record CreateStudentRequest(
-        Long schoolId,
         @NotBlank(message = "Le prénom est obligatoire et ne doit pas être vide.") String firstName,
         @NotBlank(message = "Le nom de famille est obligatoire et ne doit pas être vide.") String lastName,
         @NotNull(message = "La date de naissance est obligatoire.")

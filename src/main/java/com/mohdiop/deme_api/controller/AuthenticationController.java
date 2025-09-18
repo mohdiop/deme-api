@@ -24,14 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final SponsorService sponsorService;
-    private final SchoolService schoolService;
-    private final StudentService studentService;
     private final AuthenticationService authenticationService;
 
-    public AuthenticationController(SponsorService sponsorService, SchoolService schoolService, StudentService studentService, AuthenticationService authenticationService) {
+    public AuthenticationController(SponsorService sponsorService, AuthenticationService authenticationService) {
         this.sponsorService = sponsorService;
-        this.schoolService = schoolService;
-        this.studentService = studentService;
         this.authenticationService = authenticationService;
     }
 
@@ -41,26 +37,6 @@ public class AuthenticationController {
     ) {
         return new ResponseEntity<>(
                 sponsorService.createSponsor(createSponsorRequest),
-                HttpStatus.CREATED
-        );
-    }
-
-    @PostMapping("/register/school")
-    public ResponseEntity<SchoolResponse> createSchool(
-            @Valid @RequestBody CreateSchoolRequest createSchoolRequest
-    ) {
-        return new ResponseEntity<>(
-                schoolService.createSchool(createSchoolRequest),
-                HttpStatus.CREATED
-        );
-    }
-
-    @PostMapping("/register/student")
-    public ResponseEntity<StudentResponse> createStudent(
-            @Valid @RequestBody CreateStudentRequest createStudentRequest
-    ) {
-        return new ResponseEntity<>(
-                studentService.createStudent(createStudentRequest),
                 HttpStatus.CREATED
         );
     }

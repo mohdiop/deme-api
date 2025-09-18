@@ -38,7 +38,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     auth
                             .requestMatchers("/api/v1/auth/**")
-                            .permitAll();
+                            .permitAll()
+                            .requestMatchers("/api/v1/schools/**")
+                            .hasRole("SCHOOL")
+                            .requestMatchers("/api/v1/admins/**")
+                            .hasRole("ADMIN")
+                            .anyRequest()
+                            .authenticated();
                 })
                 .exceptionHandling(exception -> {
                     exception.authenticationEntryPoint(jwtAuthEntryPoint)

@@ -1,0 +1,16 @@
+meta {
+  name: admins
+  seq: 3
+}
+
+auth {
+  mode: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwidHlwZSI6IkFDQ0VTU19UT0tFTiIsInJvbGVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNzU4MjE2MDQwLCJleHAiOjE3NTgyMTY5NDB9.AbADDAtZU1En8_xh_eIaRAbWOd_m5IREBOVwKamvBTU
+}
+
+vars:pre-request {
+  adminUrl: {{baseUrl}}/admins
+}

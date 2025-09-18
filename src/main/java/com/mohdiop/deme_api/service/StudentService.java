@@ -25,7 +25,10 @@ public class StudentService {
         this.userRepository = userRepository;
     }
 
-    public StudentResponse createStudent(CreateStudentRequest createStudentRequest) {
+    public StudentResponse createStudent(
+            Long schoolId,
+            CreateStudentRequest createStudentRequest
+    ) {
         if (createStudentRequest.email() != null && userRepository.findByUserEmail(createStudentRequest.email()).isPresent()) {
             throw new EntityExistsException("Email invalide!");
         }
@@ -34,7 +37,7 @@ public class StudentService {
         }
         var student = createStudentRequest.toSchoollessStudent();
         student.setSchool(
-                schoolRepository.findById(createStudentRequest.schoolId())
+                schoolRepository.findById(schoolId)
                         .orElseThrow(
                                 () -> new EntityNotFoundException(
                                         "École introuvable."
