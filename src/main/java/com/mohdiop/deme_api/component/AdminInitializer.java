@@ -1,19 +1,21 @@
 package com.mohdiop.deme_api.component;
 
 import com.mohdiop.deme_api.dto.request.CreateAdminRequest;
-import com.mohdiop.deme_api.entity.enumeration.UserRole;
-import com.mohdiop.deme_api.entity.enumeration.UserState;
 import com.mohdiop.deme_api.service.AdminService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.util.HashSet;
-import java.util.List;
 
 @Component
 public class AdminInitializer implements CommandLineRunner {
 
     private final AdminService adminService;
+    @Value("${admin.email}")
+    private String adminEmail;
+    @Value("${admin.password}")
+    private String adminPassword;
+    @Value("${admin.phone}")
+    private String adminPhone;
 
     public AdminInitializer(AdminService adminService) {
         this.adminService = adminService;
@@ -23,11 +25,9 @@ public class AdminInitializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
         adminService.initializeAdmin(
                 new CreateAdminRequest(
-                        "70313104",
-                        "mohdiopcode@gmail.com",
-                        "12345678",
-                        new HashSet<>(List.of(UserRole.ROLE_ADMIN)),
-                        UserState.ACTIVE
+                        adminPhone,
+                        adminEmail,
+                        adminPassword
                 )
         );
     }

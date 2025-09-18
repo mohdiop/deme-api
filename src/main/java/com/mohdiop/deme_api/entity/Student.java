@@ -62,6 +62,7 @@ public class Student extends User {
             String address,
             StudentLevel level,
             String speciality,
+            Double funds,
             String phone,
             String email,
             String password,
@@ -77,6 +78,7 @@ public class Student extends User {
         this.studentAddress = address;
         this.studentLevel = level;
         this.studentSpeciality = speciality;
+        this.studentFunds = funds;
     }
 
     public StudentResponse toResponse() {

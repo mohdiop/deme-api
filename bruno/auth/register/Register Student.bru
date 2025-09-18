@@ -1,0 +1,32 @@
+meta {
+  name: Register Student
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{registerUrl}}/student
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "schoolId": 8,
+    "firstName": "Check Omar Tidiane",
+    "lastName": "Diop",
+    "bornOn": "2025-09-18T14:44:38.0446446",
+    "bornAt": "Bamako, Mali",
+    "gender": "MALE",
+    "address": "Thiès",
+    "level": "H1",
+    "speciality": "Science",
+    "phone": "+22390000009",
+    "email": "tidio123@gmail.com",
+    "password": "Ex@mple123"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

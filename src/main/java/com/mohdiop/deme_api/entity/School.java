@@ -33,7 +33,7 @@ public class School extends User {
     @Enumerated(EnumType.STRING)
     private SchoolType schoolType;
 
-    @OneToMany(mappedBy = "studentSchool", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "school", cascade = CascadeType.ALL)
     private Set<Student> schoolStudents;
 
     @Builder

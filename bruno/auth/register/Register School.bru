@@ -1,0 +1,27 @@
+meta {
+  name: Register School
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{registerUrl}}/school
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Kodonso",
+    "identificationNumber": "AAEY373YZAI",
+    "address": "Sotuba",
+    "type": "HIGH_SCHOOL",
+    "phone": "+22320210010",
+    "email": "mail@kodonso.com",
+    "password": "123456789"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
