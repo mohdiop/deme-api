@@ -32,6 +32,8 @@ public abstract class User {
     @Column(nullable = false)
     private String userPassword;
 
+    private String pictureUrl;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "user_roles",

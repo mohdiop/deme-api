@@ -24,11 +24,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
-        if(authHeader != null && authHeader.startsWith("Bearer ")) {
-            if(jwtService.isValidAccessToken(authHeader)) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            if (jwtService.isValidAccessToken(authHeader)) {
                 Long userId = jwtService.getUserIdFromToken(authHeader);
                 var authorities = jwtService.getUserRolesFromToken(authHeader)
-                        .stream().map((userRole)-> new SimpleGrantedAuthority(userRole.name()))
+                        .stream().map((userRole) -> new SimpleGrantedAuthority(userRole.name()))
                         .toList();
                 var auth = new UsernamePasswordAuthenticationToken(userId, null, authorities);
                 SecurityContextHolder.getContext().setAuthentication(auth);

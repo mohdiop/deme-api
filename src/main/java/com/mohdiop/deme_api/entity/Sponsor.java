@@ -38,6 +38,7 @@ public class Sponsor extends User {
             String phone,
             String email,
             String password,
+            String pictureUrl,
             Set<UserRole> roles,
             UserState state,
             String firstName,
@@ -46,7 +47,7 @@ public class Sponsor extends User {
             String organizationName,
             String address
     ) {
-        super(id, phone, email, password, roles, LocalDateTime.now(), state);
+        super(id, phone, email, password, pictureUrl, roles, LocalDateTime.now(), state);
         this.sponsorFirstName = firstName;
         this.sponsorLastName = lastName;
         this.sponsorType = sponsorType;

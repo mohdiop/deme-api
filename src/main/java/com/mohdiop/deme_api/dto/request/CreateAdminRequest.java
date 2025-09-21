@@ -4,7 +4,6 @@ import com.mohdiop.deme_api.entity.Admin;
 import com.mohdiop.deme_api.entity.enumeration.UserRole;
 import com.mohdiop.deme_api.entity.enumeration.UserState;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 

@@ -22,13 +22,13 @@ public class UserService {
                 .orElseThrow(
                         () -> new EntityNotFoundException("Utilisateur introuvable.")
                 );
-        if(user instanceof Admin) {
+        if (user instanceof Admin) {
             return ((Admin) user).toResponse();
         }
-        if(user instanceof Sponsor) {
+        if (user instanceof Sponsor) {
             return ((Sponsor) user).toResponse();
         }
-        if(user instanceof School) {
+        if (user instanceof School) {
             return ((School) user).toResponse();
         }
         return ((Student) user).toResponse();

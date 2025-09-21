@@ -19,10 +19,10 @@ public class SchoolService {
     }
 
     public SchoolResponse createSchool(CreateSchoolRequest createSchoolRequest) {
-        if(createSchoolRequest.email() != null && userRepository.findByUserEmail(createSchoolRequest.email()).isPresent()) {
+        if (createSchoolRequest.email() != null && userRepository.findByUserEmail(createSchoolRequest.email()).isPresent()) {
             throw new EntityExistsException("Email invalide!");
         }
-        if(userRepository.findByUserPhone(createSchoolRequest.phone()).isPresent()) {
+        if (userRepository.findByUserPhone(createSchoolRequest.phone()).isPresent()) {
             throw new EntityExistsException("Numéro de téléphone invalide!");
         }
         return schoolRepository.save(

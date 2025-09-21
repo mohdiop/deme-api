@@ -20,13 +20,6 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    public record ApiError(
-            String code,
-            String message,
-            Instant timestamp
-    ) {
-    }
-
     private ResponseEntity<ApiError> buildError(HttpStatus status, String code, String message) {
         return ResponseEntity.status(status)
                 .body(new ApiError(code, message, Instant.now()));
@@ -85,5 +78,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> handleRuntimeException(RuntimeException exception) {
         return buildError(HttpStatus.INTERNAL_SERVER_ERROR, "SERVER_ERROR",
                 "Un problème est survenu de notre côté. Veuillez réessayer plus tard.");
+    }
+
+    public record ApiError(
+            String code,
+            String message,
+            Instant timestamp
+    ) {
     }
 }

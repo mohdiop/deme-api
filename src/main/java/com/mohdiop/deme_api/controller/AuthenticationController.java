@@ -1,16 +1,10 @@
 package com.mohdiop.deme_api.controller;
 
 import com.mohdiop.deme_api.dto.request.AuthenticationRequest;
-import com.mohdiop.deme_api.dto.request.CreateSchoolRequest;
 import com.mohdiop.deme_api.dto.request.CreateSponsorRequest;
-import com.mohdiop.deme_api.dto.request.CreateStudentRequest;
-import com.mohdiop.deme_api.dto.response.SchoolResponse;
 import com.mohdiop.deme_api.dto.response.SponsorResponse;
-import com.mohdiop.deme_api.dto.response.StudentResponse;
 import com.mohdiop.deme_api.service.AuthenticationService;
-import com.mohdiop.deme_api.service.SchoolService;
 import com.mohdiop.deme_api.service.SponsorService;
-import com.mohdiop.deme_api.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

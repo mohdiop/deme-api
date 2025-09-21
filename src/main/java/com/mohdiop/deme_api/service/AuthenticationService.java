@@ -35,9 +35,6 @@ public class AuthenticationService {
         this.refreshTokenRepository = refreshTokenRepository;
     }
 
-    public record TokenPairResponse(String accessToken, String refreshToken) {
-    }
-
     public TokenPairResponse authenticate(AuthenticationRequest authenticationRequest) {
         User userToAuthenticate = userRepository.findByUserEmail(authenticationRequest.email())
                 .orElseThrow(() -> new BadCredentialsException("Email ou mot de passe incorrect."));
@@ -106,5 +103,8 @@ public class AuthenticationService {
 
     public Long getCurrentUserId() {
         return Long.valueOf(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+    }
+
+    public record TokenPairResponse(String accessToken, String refreshToken) {
     }
 }

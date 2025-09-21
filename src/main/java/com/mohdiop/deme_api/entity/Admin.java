@@ -5,7 +5,10 @@ import com.mohdiop.deme_api.entity.enumeration.UserRole;
 import com.mohdiop.deme_api.entity.enumeration.UserState;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -23,10 +26,11 @@ public class Admin extends User {
             String phone,
             String email,
             String password,
+            String pictureUrl,
             Set<UserRole> roles,
             UserState state
     ) {
-        super(id, phone, email, password, roles, LocalDateTime.now(), state);
+        super(id, phone, email, password, pictureUrl, roles, LocalDateTime.now(), state);
     }
 
     public AdminResponse toResponse() {

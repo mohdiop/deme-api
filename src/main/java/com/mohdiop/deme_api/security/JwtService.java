@@ -21,19 +21,12 @@ import java.util.stream.Collectors;
 @Service
 public class JwtService {
 
-    @Value("${jwt.secret}")
-    private String jwtSecret;
-
-    private SecretKey secretKey;
-
     private final long accessTokenValidityMs = 15L * 60L * 1000L;
     @Getter
     private final long refreshTokenValidityMs = 30L * 24L * 60L * 60L * 1000L;
-
-    private enum TokenType {
-        ACCESS_TOKEN,
-        REFRESH_TOKEN
-    }
+    @Value("${jwt.secret}")
+    private String jwtSecret;
+    private SecretKey secretKey;
 
     @PostConstruct
     void init() {
@@ -100,5 +93,10 @@ public class JwtService {
                 .build()
                 .parseSignedClaims(rawToken)
                 .getPayload();
+    }
+
+    private enum TokenType {
+        ACCESS_TOKEN,
+        REFRESH_TOKEN
     }
 }

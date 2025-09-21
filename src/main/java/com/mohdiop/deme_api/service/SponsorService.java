@@ -19,10 +19,10 @@ public class SponsorService {
     }
 
     public SponsorResponse createSponsor(CreateSponsorRequest createSponsorRequest) {
-        if(createSponsorRequest.email() != null && userRepository.findByUserEmail(createSponsorRequest.email()).isPresent()) {
+        if (createSponsorRequest.email() != null && userRepository.findByUserEmail(createSponsorRequest.email()).isPresent()) {
             throw new EntityExistsException("Email invalide!");
         }
-        if(userRepository.findByUserPhone(createSponsorRequest.phone()).isPresent()) {
+        if (userRepository.findByUserPhone(createSponsorRequest.phone()).isPresent()) {
             throw new EntityExistsException("Numéro de téléphone invalide!");
         }
         return sponsorRepository.save(

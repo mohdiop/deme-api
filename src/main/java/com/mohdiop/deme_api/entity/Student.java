@@ -66,10 +66,11 @@ public class Student extends User {
             String phone,
             String email,
             String password,
+            String pictureUrl,
             Set<UserRole> roles,
             UserState state
     ) {
-        super(id, phone, email, password, roles, LocalDateTime.now(), state);
+        super(id, phone, email, password, pictureUrl, roles, LocalDateTime.now(), state);
         this.studentFirstName = firstName;
         this.studentLastName = lastName;
         this.studentBornOn = bornOn;

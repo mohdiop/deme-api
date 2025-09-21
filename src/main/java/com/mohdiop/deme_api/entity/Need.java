@@ -1,5 +1,6 @@
 package com.mohdiop.deme_api.entity;
 
+import com.mohdiop.deme_api.entity.enumeration.NeedEmergency;
 import com.mohdiop.deme_api.entity.enumeration.NeedType;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -26,6 +27,10 @@ public class Need {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private NeedType needType;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private NeedEmergency needEmergency;
 
     @Column(nullable = false)
     private Boolean needSatisfied = false;
