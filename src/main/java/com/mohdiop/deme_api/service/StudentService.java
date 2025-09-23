@@ -2,12 +2,16 @@ package com.mohdiop.deme_api.service;
 
 import com.mohdiop.deme_api.dto.request.CreateStudentRequest;
 import com.mohdiop.deme_api.dto.response.StudentResponse;
+import com.mohdiop.deme_api.entity.Student;
 import com.mohdiop.deme_api.repository.SchoolRepository;
 import com.mohdiop.deme_api.repository.StudentRepository;
 import com.mohdiop.deme_api.repository.UserRepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class StudentService {
@@ -45,5 +49,11 @@ public class StudentService {
                         )
         );
         return studentRepository.save(student).toResponse();
+    }
+
+    public List<StudentResponse> getAllStudents() {
+        List<Student> allStudents = studentRepository.findAll();
+        if (allStudents.isEmpty()) return new ArrayList<>();
+        return allStudents.stream().map(Student::toResponse).toList();
     }
 }

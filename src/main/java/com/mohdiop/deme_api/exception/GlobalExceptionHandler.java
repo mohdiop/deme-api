@@ -77,7 +77,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ApiError> handleRuntimeException(RuntimeException exception) {
         return buildError(HttpStatus.INTERNAL_SERVER_ERROR, "SERVER_ERROR",
-                "Un problème est survenu de notre côté. Veuillez réessayer plus tard.");
+                exception.getMessage());
     }
 
     public record ApiError(

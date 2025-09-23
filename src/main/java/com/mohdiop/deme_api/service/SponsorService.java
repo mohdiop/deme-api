@@ -2,10 +2,14 @@ package com.mohdiop.deme_api.service;
 
 import com.mohdiop.deme_api.dto.request.CreateSponsorRequest;
 import com.mohdiop.deme_api.dto.response.SponsorResponse;
+import com.mohdiop.deme_api.entity.Sponsor;
 import com.mohdiop.deme_api.repository.SponsorRepository;
 import com.mohdiop.deme_api.repository.UserRepository;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class SponsorService {
@@ -28,5 +32,11 @@ public class SponsorService {
         return sponsorRepository.save(
                 createSponsorRequest.toSponsor()
         ).toResponse();
+    }
+
+    public List<SponsorResponse> getAllSponsors() {
+        List<Sponsor> allSponsors = sponsorRepository.findAll();
+        if(allSponsors.isEmpty()) return new ArrayList<>();
+        return allSponsors.stream().map(Sponsor::toResponse).toList();
     }
 }

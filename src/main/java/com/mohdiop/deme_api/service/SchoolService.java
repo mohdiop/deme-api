@@ -2,10 +2,14 @@ package com.mohdiop.deme_api.service;
 
 import com.mohdiop.deme_api.dto.request.CreateSchoolRequest;
 import com.mohdiop.deme_api.dto.response.SchoolResponse;
+import com.mohdiop.deme_api.entity.School;
 import com.mohdiop.deme_api.repository.SchoolRepository;
 import com.mohdiop.deme_api.repository.UserRepository;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class SchoolService {
@@ -28,5 +32,11 @@ public class SchoolService {
         return schoolRepository.save(
                 createSchoolRequest.toSchool()
         ).toResponse();
+    }
+
+    public List<SchoolResponse> getAllSchool() {
+        List<School> allSchools = schoolRepository.findAll();
+        if (allSchools.isEmpty()) return new ArrayList<>();
+        return allSchools.stream().map(School::toResponse).toList();
     }
 }

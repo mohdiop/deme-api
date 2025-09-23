@@ -1,13 +1,19 @@
 package com.mohdiop.deme_api.entity;
 
+import com.mohdiop.deme_api.dto.response.NeedResponse;
 import com.mohdiop.deme_api.entity.enumeration.NeedEmergency;
+import com.mohdiop.deme_api.entity.enumeration.NeedState;
 import com.mohdiop.deme_api.entity.enumeration.NeedType;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Data
 @Table(name = "needs")
+@Builder
 public class Need {
 
     @Id
@@ -32,6 +38,26 @@ public class Need {
     @Enumerated(EnumType.STRING)
     private NeedEmergency needEmergency;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Boolean needSatisfied = false;
+    private NeedState needState;
+
+    @Column(nullable = false)
+    private LocalDateTime needCreatedAt;
+
+    @Column(nullable = false)
+    private LocalDateTime needExpiresAt;
+
+    public NeedResponse toResponse() {
+        return new NeedResponse(
+                student.getUserId(),
+                needDescription,
+                neededAmount,
+                needType,
+                needEmergency,
+                needState,
+                needCreatedAt,
+                needExpiresAt
+        );
+    }
 }
