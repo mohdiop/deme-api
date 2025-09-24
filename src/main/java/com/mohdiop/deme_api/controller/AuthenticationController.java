@@ -1,7 +1,7 @@
 package com.mohdiop.deme_api.controller;
 
 import com.mohdiop.deme_api.dto.request.AuthenticationRequest;
-import com.mohdiop.deme_api.dto.request.CreateSponsorRequest;
+import com.mohdiop.deme_api.dto.request.creation.CreateSponsorRequest;
 import com.mohdiop.deme_api.dto.response.SponsorResponse;
 import com.mohdiop.deme_api.service.AuthenticationService;
 import com.mohdiop.deme_api.service.SponsorService;

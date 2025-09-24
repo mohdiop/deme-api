@@ -1,6 +1,6 @@
 package com.mohdiop.deme_api.controller;
 
-import com.mohdiop.deme_api.dto.request.CreateNeedRequest;
+import com.mohdiop.deme_api.dto.request.creation.CreateNeedRequest;
 import com.mohdiop.deme_api.dto.response.NeedResponse;
 import com.mohdiop.deme_api.service.AuthenticationService;
 import com.mohdiop.deme_api.service.NeedService;

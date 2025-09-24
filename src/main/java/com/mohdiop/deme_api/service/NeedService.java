@@ -1,6 +1,6 @@
 package com.mohdiop.deme_api.service;
 
-import com.mohdiop.deme_api.dto.request.CreateNeedRequest;
+import com.mohdiop.deme_api.dto.request.creation.CreateNeedRequest;
 import com.mohdiop.deme_api.dto.response.NeedResponse;
 import com.mohdiop.deme_api.entity.Need;
 import com.mohdiop.deme_api.entity.Student;

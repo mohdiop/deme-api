@@ -1,6 +1,6 @@
 package com.mohdiop.deme_api.controller;
 
-import com.mohdiop.deme_api.dto.request.CreateSchoolRequest;
+import com.mohdiop.deme_api.dto.request.creation.CreateSchoolRequest;
 import com.mohdiop.deme_api.dto.response.SchoolResponse;
 import com.mohdiop.deme_api.dto.response.SponsorResponse;
 import com.mohdiop.deme_api.dto.response.StudentResponse;

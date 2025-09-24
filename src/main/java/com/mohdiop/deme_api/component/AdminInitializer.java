@@ -1,6 +1,6 @@
 package com.mohdiop.deme_api.component;
 
-import com.mohdiop.deme_api.dto.request.CreateAdminRequest;
+import com.mohdiop.deme_api.dto.request.creation.CreateAdminRequest;
 import com.mohdiop.deme_api.service.AdminService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;

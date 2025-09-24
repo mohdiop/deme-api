@@ -1,0 +1,31 @@
+meta {
+  name: Update student
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{schoolUrl}}/students/3
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "firstName": "Check Omar Tidiane",
+    "lastName": "Diop",
+    "bornOn": "2008-11-20T14:44:38.0446446",
+    "bornAt": "Bamako, Mali",
+    "gender": "MALE",
+    "address": "Thiès",
+    "level": "H1",
+    "speciality": "Science",
+    "phone": "+22370000000",
+    "email": "tidio@gmail.com",
+    "password": "Ex@mple123"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

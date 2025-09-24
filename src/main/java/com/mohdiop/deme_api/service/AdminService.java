@@ -1,6 +1,6 @@
 package com.mohdiop.deme_api.service;
 
-import com.mohdiop.deme_api.dto.request.CreateAdminRequest;
+import com.mohdiop.deme_api.dto.request.creation.CreateAdminRequest;
 import com.mohdiop.deme_api.entity.Admin;
 import com.mohdiop.deme_api.entity.enumeration.UserRole;
 import com.mohdiop.deme_api.repository.AdminRepository;

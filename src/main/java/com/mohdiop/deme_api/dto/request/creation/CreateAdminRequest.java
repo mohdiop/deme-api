@@ -1,4 +1,4 @@
-package com.mohdiop.deme_api.dto.request;
+package com.mohdiop.deme_api.dto.request.creation;
 
 import com.mohdiop.deme_api.entity.Admin;
 import com.mohdiop.deme_api.entity.enumeration.UserRole;

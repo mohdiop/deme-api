@@ -1,0 +1,26 @@
+meta {
+  name: Update sponsor
+  type: http
+  seq: 1
+}
+
+patch {
+  url: {{baseUrl}}/sponsors
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "firstName": "Orange",
+    "lastName": "Fondation",
+    "sponsorType": "ORGANIZATIONAL",
+    "organizationName": "Orange-Mali",
+    "address": "ACI 2000, Bamako, Mali",
+    "password": "Ex@mple123"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
