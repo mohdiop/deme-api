@@ -28,8 +28,8 @@ public class UserService {
         if (user instanceof Sponsor) {
             return ((Sponsor) user).toResponse();
         }
-        if (user instanceof School) {
-            return ((School) user).toResponse();
+        if (user instanceof Organization) {
+            return ((Organization) user).toResponse();
         }
         return ((Student) user).toResponse();
     }
@@ -45,8 +45,8 @@ public class UserService {
                     if (user instanceof Sponsor) {
                         return ((Sponsor) user).toResponse();
                     }
-                    if (user instanceof School) {
-                        return ((School) user).toResponse();
+                    if (user instanceof Organization) {
+                        return ((Organization) user).toResponse();
                     }
                     return ((Student) user).toResponse();
                 }

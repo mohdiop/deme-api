@@ -22,8 +22,8 @@ import java.util.Set;
 public class Student extends User {
 
     @ManyToOne
-    @JoinColumn(name = "school_id", nullable = false)
-    private School school;
+    @JoinColumn(name = "organization_id", nullable = false)
+    private Organization organization;
 
     @Column(nullable = false)
     private String studentFirstName;
@@ -85,7 +85,7 @@ public class Student extends User {
     public StudentResponse toResponse() {
         return new StudentResponse(
                 getUserId(),
-                school.getUserId(),
+                organization.getUserId(),
                 studentFirstName,
                 studentLastName,
                 studentBornOn,

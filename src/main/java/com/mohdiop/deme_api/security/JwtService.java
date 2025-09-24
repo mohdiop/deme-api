@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 @Service
 public class JwtService {
 
-    private final long accessTokenValidityMs = 15L * 60L * 1000L;
     @Getter
     private final long refreshTokenValidityMs = 30L * 24L * 60L * 60L * 1000L;
     @Value("${jwt.secret}")
@@ -48,6 +47,7 @@ public class JwtService {
     }
 
     public String generateAccessToken(Long userId, Set<UserRole> userRoles) {
+        long accessTokenValidityMs = 15L * 60L * 1000L;
         return generateToken(userId, TokenType.ACCESS_TOKEN, accessTokenValidityMs, userRoles);
     }
 

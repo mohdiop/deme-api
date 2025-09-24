@@ -27,4 +27,8 @@ public class Argument {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, name = "report_id")
     private Report relatedReport;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(nullable = false, name = "author_id")
+    private User author;
 }

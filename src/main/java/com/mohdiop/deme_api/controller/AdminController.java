@@ -1,13 +1,10 @@
 package com.mohdiop.deme_api.controller;
 
-import com.mohdiop.deme_api.dto.request.creation.CreateSchoolRequest;
-import com.mohdiop.deme_api.dto.response.SchoolResponse;
+import com.mohdiop.deme_api.dto.request.creation.CreateOrganizationRequest;
+import com.mohdiop.deme_api.dto.response.OrganizationResponse;
 import com.mohdiop.deme_api.dto.response.SponsorResponse;
 import com.mohdiop.deme_api.dto.response.StudentResponse;
-import com.mohdiop.deme_api.service.SchoolService;
-import com.mohdiop.deme_api.service.SponsorService;
-import com.mohdiop.deme_api.service.StudentService;
-import com.mohdiop.deme_api.service.UserService;
+import com.mohdiop.deme_api.service.*;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,23 +17,23 @@ import java.util.List;
 public class AdminController {
 
     private final SponsorService sponsorService;
-    private final SchoolService schoolService;
+    private final OrganizationService organizationService;
     private final StudentService studentService;
     private final UserService userService;
 
-    public AdminController(SponsorService sponsorService, SchoolService schoolService, StudentService studentService, UserService userService) {
+    public AdminController(SponsorService sponsorService, OrganizationService organizationService, StudentService studentService, UserService userService) {
         this.sponsorService = sponsorService;
-        this.schoolService = schoolService;
+        this.organizationService = organizationService;
         this.studentService = studentService;
         this.userService = userService;
     }
 
-    @PostMapping("/register/school")
-    public ResponseEntity<SchoolResponse> createSchool(
-            @Valid @RequestBody CreateSchoolRequest createSchoolRequest
+    @PostMapping("/register/organizations")
+    public ResponseEntity<OrganizationResponse> createSchool(
+            @Valid @RequestBody CreateOrganizationRequest createOrganizationRequest
     ) {
         return new ResponseEntity<>(
-                schoolService.createSchool(createSchoolRequest),
+                organizationService.createOrganization(createOrganizationRequest),
                 HttpStatus.CREATED
         );
     }
@@ -46,9 +43,9 @@ public class AdminController {
         return ResponseEntity.ok(sponsorService.getAllSponsors());
     }
 
-    @GetMapping("/schools")
-    public ResponseEntity<List<SchoolResponse>> getAllSchools() {
-        return ResponseEntity.ok(schoolService.getAllSchool());
+    @GetMapping("/organizations")
+    public ResponseEntity<List<OrganizationResponse>> getAllOrganizations() {
+        return ResponseEntity.ok(organizationService.getAllOrganizations());
     }
 
     @GetMapping("/students")

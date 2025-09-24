@@ -5,7 +5,7 @@ import com.mohdiop.deme_api.dto.request.update.UpdateStudentBySchoolRequest;
 import com.mohdiop.deme_api.dto.request.update.UpdateStudentByStudentRequest;
 import com.mohdiop.deme_api.dto.response.StudentResponse;
 import com.mohdiop.deme_api.entity.Student;
-import com.mohdiop.deme_api.repository.SchoolRepository;
+import com.mohdiop.deme_api.repository.OrganizationRepository;
 import com.mohdiop.deme_api.repository.StudentRepository;
 import com.mohdiop.deme_api.repository.UserRepository;
 import jakarta.persistence.EntityExistsException;
@@ -22,15 +22,16 @@ import java.util.Objects;
 public class StudentService {
 
     private final StudentRepository studentRepository;
-    private final SchoolRepository schoolRepository;
+    private final OrganizationRepository organizationRepository;
     private final UserRepository userRepository;
 
     public StudentService(
             StudentRepository studentRepository,
-            SchoolRepository schoolRepository, UserRepository userRepository
+            OrganizationRepository organizationRepository,
+            UserRepository userRepository
     ) {
         this.studentRepository = studentRepository;
-        this.schoolRepository = schoolRepository;
+        this.organizationRepository = organizationRepository;
         this.userRepository = userRepository;
     }
 
@@ -38,15 +39,10 @@ public class StudentService {
             Long schoolId,
             CreateStudentRequest createStudentRequest
     ) {
-        if (createStudentRequest.email() != null && userRepository.findByUserEmail(createStudentRequest.email()).isPresent()) {
-            throw new EntityExistsException("Email invalide!");
-        }
-        if (userRepository.findByUserPhone(createStudentRequest.phone()).isPresent()) {
-            throw new EntityExistsException("Numéro de téléphone invalide!");
-        }
-        var student = createStudentRequest.toSchoollessStudent();
-        student.setSchool(
-                schoolRepository.findById(schoolId)
+        validatePhoneAndEmailOrThrowException(createStudentRequest.phone(), createStudentRequest.email());
+        var student = createStudentRequest.toOrganizationLessStudent();
+        student.setOrganization(
+                organizationRepository.findById(schoolId)
                         .orElseThrow(
                                 () -> new EntityNotFoundException(
                                         "École introuvable."
@@ -66,8 +62,8 @@ public class StudentService {
                 .orElseThrow(
                         () -> new EntityNotFoundException("Elève introuvable.")
                 );
-        if(!Objects.equals(schoolId, studentToUpdate.getSchool().getUserId())) {
-            throw new AccessDeniedException("Cet(te) élève ne fait pas partie de cette école.");
+        if (!Objects.equals(schoolId, studentToUpdate.getOrganization().getUserId())) {
+            throw new AccessDeniedException("Cet(te) élève n'est pas affilié(e) à cette organisation.");
         }
         if (updateStudentBySchoolRequest.firstName() != null) {
             studentToUpdate.setStudentFirstName(updateStudentBySchoolRequest.firstName());

@@ -44,7 +44,7 @@ public record CreateStudentRequest(
                 message = "Mot de passe invalide (min 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial)"
         ) String password
 ) {
-    public Student toSchoollessStudent() {
+    public Student toOrganizationLessStudent() {
         return Student.builder()
                 .firstName(firstName)
                 .lastName(lastName)

@@ -1,12 +1,12 @@
 package com.mohdiop.deme_api.controller;
 
 import com.mohdiop.deme_api.dto.request.creation.CreateStudentRequest;
-import com.mohdiop.deme_api.dto.request.update.UpdateSchoolRequest;
+import com.mohdiop.deme_api.dto.request.update.UpdateOrganizationRequest;
 import com.mohdiop.deme_api.dto.request.update.UpdateStudentBySchoolRequest;
-import com.mohdiop.deme_api.dto.response.SchoolResponse;
+import com.mohdiop.deme_api.dto.response.OrganizationResponse;
 import com.mohdiop.deme_api.dto.response.StudentResponse;
 import com.mohdiop.deme_api.service.AuthenticationService;
-import com.mohdiop.deme_api.service.SchoolService;
+import com.mohdiop.deme_api.service.OrganizationService;
 import com.mohdiop.deme_api.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -14,17 +14,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/schools")
-public class SchoolController {
+@RequestMapping("/api/v1/organizations")
+public class OrganizationController {
 
     private final StudentService studentService;
     private final AuthenticationService authenticationService;
-    private final SchoolService schoolService;
+    private final OrganizationService organizationService;
 
-    public SchoolController(StudentService studentService, AuthenticationService authenticationService, SchoolService schoolService) {
+    public OrganizationController(StudentService studentService, AuthenticationService authenticationService, OrganizationService organizationService) {
         this.studentService = studentService;
         this.authenticationService = authenticationService;
-        this.schoolService = schoolService;
+        this.organizationService = organizationService;
     }
 
     @PostMapping("/register/student")
@@ -41,13 +41,13 @@ public class SchoolController {
     }
 
     @PatchMapping
-    public ResponseEntity<SchoolResponse> updateSchool(
-            @Valid @RequestBody UpdateSchoolRequest updateSchoolRequest
+    public ResponseEntity<OrganizationResponse> updateSchool(
+            @Valid @RequestBody UpdateOrganizationRequest updateOrganizationRequest
     ) {
         return ResponseEntity.ok(
-                schoolService.updateSchool(
+                organizationService.updateOrganization(
                         authenticationService.getCurrentUserId(),
-                        updateSchoolRequest
+                        updateOrganizationRequest
                 )
         );
     }

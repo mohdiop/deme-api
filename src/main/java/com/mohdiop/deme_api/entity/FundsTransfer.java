@@ -16,8 +16,8 @@ public class FundsTransfer {
     private Long transferId;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false, name = "school_id")
-    private School author;
+    @JoinColumn(nullable = false, name = "organization_id")
+    private Organization author;
 
     @OneToOne
     @JoinColumn(name = "from_student_id", nullable = false)

@@ -1,0 +1,32 @@
+meta {
+  name: Register Organization
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{adminUrl}}/register/organizations
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Fondation Orange Mali",
+    "address": "BP E 3991 Bamako Mali, Hamdallaye ACI 2000, Bamako, Mali",
+    "createdAt": "2011-06-01T00:00:00",
+    "history": "La Fondation Orange Mali soutient depuis 2011 des projets sociaux dans les domaines de l'éducation, de la santé et de la culture au Mali.",
+    "legalStatus": "FOUNDATION",
+    "interventionArea": "Éducation, santé, culture et inclusion numérique au Mali",
+    "targetAudiences": ["STUDENTS", "WOMEN", "COMMUNITIES"],
+    "webSite": "https://www.orangemali.com/fondation",
+    "password": "Test@1234",
+    "phone": "+22344999000",
+    "email": "contact@fondationorange.mali.ml"
+  }
+  
+}
+
+settings {
+  encodeUrl: true
+}
