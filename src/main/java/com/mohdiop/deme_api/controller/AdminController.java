@@ -1,6 +1,7 @@
 package com.mohdiop.deme_api.controller;
 
 import com.mohdiop.deme_api.dto.request.creation.CreateOrganizationRequest;
+import com.mohdiop.deme_api.dto.response.NeedResponse;
 import com.mohdiop.deme_api.dto.response.OrganizationResponse;
 import com.mohdiop.deme_api.dto.response.SponsorResponse;
 import com.mohdiop.deme_api.dto.response.StudentResponse;
@@ -20,12 +21,14 @@ public class AdminController {
     private final OrganizationService organizationService;
     private final StudentService studentService;
     private final UserService userService;
+    private final NeedService needService;
 
-    public AdminController(SponsorService sponsorService, OrganizationService organizationService, StudentService studentService, UserService userService) {
+    public AdminController(SponsorService sponsorService, OrganizationService organizationService, StudentService studentService, UserService userService, NeedService needService) {
         this.sponsorService = sponsorService;
         this.organizationService = organizationService;
         this.studentService = studentService;
         this.userService = userService;
+        this.needService = needService;
     }
 
     @PostMapping("/register/organizations")
@@ -56,5 +59,10 @@ public class AdminController {
     @GetMapping("/users")
     public ResponseEntity<List<Record>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+    @GetMapping("/needs")
+    public ResponseEntity<List<NeedResponse>> getAllNeeds() {
+        return ResponseEntity.ok(needService.getAllNeeds());
     }
 }

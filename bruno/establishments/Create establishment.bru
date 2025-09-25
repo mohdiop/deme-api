@@ -1,0 +1,29 @@
+meta {
+  name: Create establishment
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{establishmentUrl}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Lycée Technique de Bamako",
+    "address": "Avenue de l'Indépendance, Bamako, Mali",
+    "identificationNumber": "LTB-2023-001",
+    "creationDate": "2010-10-01T00:00:00",
+    "phone": "+22370112233",
+    "email": "contact@ltbamako.ml",
+    "type": "PUBLIC",
+    "levels": ["HIGH_SCHOOL", "TECHNICAL"]
+  }
+  
+}
+
+settings {
+  encodeUrl: true
+}

@@ -4,13 +4,5 @@ meta {
 }
 
 auth {
-  mode: bearer
-}
-
-auth:bearer {
-  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMCIsInR5cGUiOiJBQ0NFU1NfVE9LRU4iLCJyb2xlcyI6WyJST0xFX1NDSE9PTCJdLCJpYXQiOjE3NTg1NTYwOTEsImV4cCI6MTc1ODU1Njk5MX0.3iF6MFcPATGbx_WixV1rzIR309X_pPSBz0QpdPbfWnQ
-}
-
-vars:pre-request {
-  needsUrl: {{baseUrl}}/schools/students/needs
+  mode: inherit
 }

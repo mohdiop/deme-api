@@ -33,7 +33,7 @@ public class AdminService {
             return;
         }
         adminRepository.save(
-                createAdminRequest.toEntity()
+                createAdminRequest.toAdmin()
         );
     }
 }

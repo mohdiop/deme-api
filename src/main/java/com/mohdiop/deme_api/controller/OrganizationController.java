@@ -41,7 +41,7 @@ public class OrganizationController {
     }
 
     @PatchMapping
-    public ResponseEntity<OrganizationResponse> updateSchool(
+    public ResponseEntity<OrganizationResponse> updateOrganization(
             @Valid @RequestBody UpdateOrganizationRequest updateOrganizationRequest
     ) {
         return ResponseEntity.ok(

@@ -1,18 +1,18 @@
 meta {
-  name: Update school
+  name: Update establishment
   type: http
-  seq: 2
+  seq: 3
 }
 
 patch {
-  url: {{organizationUrl}}
+  url: {{establishmentUrl}}/1
   body: json
   auth: inherit
 }
 
 body:json {
   {
-    "name": "Kodonso"
+      "identificationNumber": "LTB-2023-001"
   }
 }
 

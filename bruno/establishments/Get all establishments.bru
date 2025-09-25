@@ -1,0 +1,15 @@
+meta {
+  name: Get all establishments
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{establishmentUrl}}
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

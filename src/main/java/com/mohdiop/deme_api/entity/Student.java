@@ -25,6 +25,10 @@ public class Student extends User {
     @JoinColumn(name = "organization_id", nullable = false)
     private Organization organization;
 
+    @ManyToOne
+    @JoinColumn(name = "establishment_id")
+    private Establishment establishment;
+
     @Column(nullable = false)
     private String studentFirstName;
 

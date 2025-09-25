@@ -5,8 +5,10 @@ import com.mohdiop.deme_api.entity.enumeration.NeedEmergency;
 import com.mohdiop.deme_api.entity.enumeration.NeedState;
 import com.mohdiop.deme_api.entity.enumeration.NeedType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +16,8 @@ import java.time.LocalDateTime;
 @Data
 @Table(name = "needs")
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Need {
 
     @Id

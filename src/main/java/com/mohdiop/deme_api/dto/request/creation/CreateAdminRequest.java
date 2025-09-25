@@ -21,7 +21,7 @@ public record CreateAdminRequest(
                 message = "Mot de passe invalide (min 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial)"
         ) String password
 ) {
-    public Admin toEntity() {
+    public Admin toAdmin() {
         return Admin.builder()
                 .phone(phone)
                 .email(email)

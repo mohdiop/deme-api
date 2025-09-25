@@ -1,6 +1,7 @@
 package com.mohdiop.deme_api.controller;
 
 import com.mohdiop.deme_api.dto.request.creation.CreateNeedRequest;
+import com.mohdiop.deme_api.dto.request.update.UpdateNeedRequest;
 import com.mohdiop.deme_api.dto.response.NeedResponse;
 import com.mohdiop.deme_api.service.AuthenticationService;
 import com.mohdiop.deme_api.service.NeedService;
@@ -10,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/schools/students")
+@RequestMapping("/api/v1/organizations/students")
 public class NeedController {
 
     private final NeedService needService;
@@ -33,6 +34,19 @@ public class NeedController {
                         createNeedRequest
                 ),
                 HttpStatus.CREATED
+        );
+    }
+
+    @PatchMapping("/needs/{needId}")
+    public ResponseEntity<NeedResponse> updateNeed(
+            @PathVariable Long needId,
+            @Valid @RequestBody UpdateNeedRequest updateNeedRequest
+    ) {
+        return ResponseEntity.ok(
+                needService.updateNeed(
+                        needId,
+                        updateNeedRequest
+                )
         );
     }
 }
