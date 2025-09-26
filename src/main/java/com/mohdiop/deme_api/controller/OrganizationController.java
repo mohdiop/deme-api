@@ -58,7 +58,7 @@ public class OrganizationController {
             @Valid @RequestBody UpdateStudentBySchoolRequest updateStudentBySchoolRequest
     ) {
         return ResponseEntity.ok(
-                studentService.updateStudentBySchool(
+                studentService.updateStudentByOrganization(
                         authenticationService.getCurrentUserId(),
                         studentId,
                         updateStudentBySchoolRequest

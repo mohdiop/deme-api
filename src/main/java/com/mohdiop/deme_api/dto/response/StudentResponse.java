@@ -10,7 +10,8 @@ import java.util.Set;
 
 public record StudentResponse(
         Long id,
-        Long schoolId,
+        Long organizationId,
+        Long establishmentId,
         String firstName,
         String lastName,
         LocalDateTime bornOn,

@@ -5,6 +5,7 @@ import com.mohdiop.deme_api.dto.request.update.UpdateStudentBySchoolRequest;
 import com.mohdiop.deme_api.dto.request.update.UpdateStudentByStudentRequest;
 import com.mohdiop.deme_api.dto.response.StudentResponse;
 import com.mohdiop.deme_api.entity.Student;
+import com.mohdiop.deme_api.repository.EstablishmentRepository;
 import com.mohdiop.deme_api.repository.OrganizationRepository;
 import com.mohdiop.deme_api.repository.StudentRepository;
 import com.mohdiop.deme_api.repository.UserRepository;
@@ -24,36 +25,44 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final OrganizationRepository organizationRepository;
     private final UserRepository userRepository;
+    private final EstablishmentRepository establishmentRepository;
 
     public StudentService(
             StudentRepository studentRepository,
             OrganizationRepository organizationRepository,
-            UserRepository userRepository
+            UserRepository userRepository, EstablishmentRepository establishmentRepository
     ) {
         this.studentRepository = studentRepository;
         this.organizationRepository = organizationRepository;
         this.userRepository = userRepository;
+        this.establishmentRepository = establishmentRepository;
     }
 
     public StudentResponse createStudent(
-            Long schoolId,
+            Long organizationId,
             CreateStudentRequest createStudentRequest
     ) {
         validatePhoneAndEmailOrThrowException(createStudentRequest.phone(), createStudentRequest.email());
-        var student = createStudentRequest.toOrganizationLessStudent();
+        var student = createStudentRequest.toOrganizationLessAndEstablishmentLessStudent();
         student.setOrganization(
-                organizationRepository.findById(schoolId)
+                organizationRepository.findById(organizationId)
                         .orElseThrow(
                                 () -> new EntityNotFoundException(
-                                        "École introuvable."
+                                        "Organisation introuvable."
                                 )
+                        )
+        );
+        student.setEstablishment(
+                establishmentRepository.findById(createStudentRequest.establishmentId())
+                        .orElseThrow(
+                                () -> new EntityNotFoundException("École introuvable.")
                         )
         );
         return studentRepository.save(student).toResponse();
     }
 
-    public StudentResponse updateStudentBySchool(
-            Long schoolId,
+    public StudentResponse updateStudentByOrganization(
+            Long organizationId,
             Long studentId,
             UpdateStudentBySchoolRequest updateStudentBySchoolRequest
     ) {
@@ -62,7 +71,7 @@ public class StudentService {
                 .orElseThrow(
                         () -> new EntityNotFoundException("Elève introuvable.")
                 );
-        if (!Objects.equals(schoolId, studentToUpdate.getOrganization().getUserId())) {
+        if (!Objects.equals(organizationId, studentToUpdate.getOrganization().getUserId())) {
             throw new AccessDeniedException("Cet(te) élève n'est pas affilié(e) à cette organisation.");
         }
         if (updateStudentBySchoolRequest.firstName() != null) {

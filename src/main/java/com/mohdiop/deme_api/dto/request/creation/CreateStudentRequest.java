@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 
 public record CreateStudentRequest(
+        @NotNull(message = "L'identifiant de l'école est obligatoire.")
+        @Positive(message = "Identifiant invalide.") Long establishmentId,
         @NotBlank(message = "Le prénom est obligatoire et ne doit pas être vide.") String firstName,
         @NotBlank(message = "Le nom de famille est obligatoire et ne doit pas être vide.") String lastName,
         @NotNull(message = "La date de naissance est obligatoire.")
@@ -44,7 +46,7 @@ public record CreateStudentRequest(
                 message = "Mot de passe invalide (min 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial)"
         ) String password
 ) {
-    public Student toOrganizationLessStudent() {
+    public Student toOrganizationLessAndEstablishmentLessStudent() {
         return Student.builder()
                 .firstName(firstName)
                 .lastName(lastName)

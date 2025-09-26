@@ -90,6 +90,7 @@ public class Student extends User {
         return new StudentResponse(
                 getUserId(),
                 organization.getUserId(),
+                establishment.getEstablishmentId(),
                 studentFirstName,
                 studentLastName,
                 studentBornOn,
