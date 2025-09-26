@@ -1,0 +1,15 @@
+meta {
+  name: Get sponsorship by student id
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/sponsorships
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

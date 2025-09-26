@@ -1,0 +1,15 @@
+meta {
+  name: Get all sponsorships
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{adminUrl}}/sponsorships
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

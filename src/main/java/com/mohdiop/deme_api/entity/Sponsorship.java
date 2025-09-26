@@ -47,6 +47,7 @@ public class Sponsorship {
 
     public SponsorshipResponse toResponse() {
         return new SponsorshipResponse(
+                sponsorshipId,
                 sponsor.getUserId(),
                 student.getUserId(),
                 sponsorshipStartedAt,

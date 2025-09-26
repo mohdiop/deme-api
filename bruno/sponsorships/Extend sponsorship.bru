@@ -1,0 +1,19 @@
+meta {
+  name: Extend sponsorship
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/sponsorships/2
+  body: json
+  auth: inherit
+}
+
+body:json {
+  "2025-10-01T00:00:00"
+}
+
+settings {
+  encodeUrl: true
+}

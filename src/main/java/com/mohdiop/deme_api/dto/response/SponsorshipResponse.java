@@ -6,6 +6,7 @@ import com.mohdiop.deme_api.entity.enumeration.SponsorshipType;
 import java.time.LocalDateTime;
 
 public record SponsorshipResponse(
+        Long id,
         Long sponsorId,
         Long studentId,
         LocalDateTime startedAt,

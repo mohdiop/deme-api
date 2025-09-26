@@ -57,7 +57,6 @@ public class Student extends User {
     private Double studentFunds;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @Transient
     @Size(max = 2)
     private Set<Tutor> tutors;
 

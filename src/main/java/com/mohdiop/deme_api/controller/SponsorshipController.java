@@ -35,7 +35,10 @@ public class SponsorshipController {
             @Valid @RequestBody CreateSponsorshipRequest createSponsorshipRequest
     ) {
         return new ResponseEntity<>(
-                sponsorshipService.createSponsorship(createSponsorshipRequest),
+                sponsorshipService.createSponsorship(
+                        authenticationService.getCurrentUserId(),
+                        createSponsorshipRequest
+                ),
                 HttpStatus.CREATED
         );
     }
@@ -58,6 +61,7 @@ public class SponsorshipController {
     @PostMapping("/{sponsorshipId}")
     public ResponseEntity<SponsorshipResponse> extendSponsorship(
             @PathVariable Long sponsorshipId,
+            @Valid
             @NotNull(message = "La date de fin est obligatoire.")
             @Future(message = "La date de fin doit être dans le futur.")
             @RequestBody LocalDateTime newEndDate
@@ -77,6 +81,16 @@ public class SponsorshipController {
                 sponsorshipService.getSponsorshipsBySponsorId(
                         authenticationService.getCurrentUserId()
                 )
+        );
+    }
+
+    @PreAuthorize("hasAnyRole('ORGANIZATION', 'STUDENT')")
+    @GetMapping("/{studentId}")
+    public ResponseEntity<SponsorshipResponse> getSponsorshipByStudentId(
+            @PathVariable Long studentId
+    ) {
+        return ResponseEntity.ok(
+                sponsorshipService.getSponsorshipByStudentId(studentId)
         );
     }
 }

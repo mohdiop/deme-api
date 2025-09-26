@@ -33,9 +33,10 @@ public class SponsorshipService {
     }
 
     public SponsorshipResponse createSponsorship(
+            Long sponsorId,
             CreateSponsorshipRequest createSponsorshipRequest
     ) {
-        Sponsor sponsor = sponsorRepository.findById(createSponsorshipRequest.sponsorId())
+        Sponsor sponsor = sponsorRepository.findById(sponsorId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("Parrain introuvable.")
                 );
@@ -86,6 +87,7 @@ public class SponsorshipService {
             throw new BadRequestException("La date de prolongation doit être dans le futur.");
         }
         sponsorshipToUpdate.setSponsorshipEndAt(newEndDate);
+        sponsorshipToUpdate.setSponsorshipState(SponsorshipState.IN_PROGRESS);
         return sponsorshipRepository.save(sponsorshipToUpdate).toResponse();
     }
 

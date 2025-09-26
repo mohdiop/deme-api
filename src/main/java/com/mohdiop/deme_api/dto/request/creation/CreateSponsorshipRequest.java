@@ -10,10 +10,6 @@ import jakarta.validation.constraints.Positive;
 import java.time.LocalDateTime;
 
 public record CreateSponsorshipRequest(
-        @NotNull(message = "L'identifiant du sponsor est obligatoire.")
-        @Positive(message = "Identifiant du sponsor invalide.")
-        Long sponsorId,
-
         @NotNull(message = "L'identifiant de l'étudiant est obligatoire.")
         @Positive(message = "Identifiant de l'étudiant invalide.")
         Long studentId,

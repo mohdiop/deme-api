@@ -1,0 +1,21 @@
+meta {
+  name: Update sponsorship
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseUrl}}/sponsorships/1
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "type": "IDENTIFIED"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

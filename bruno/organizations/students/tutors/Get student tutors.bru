@@ -1,0 +1,15 @@
+meta {
+  name: Get student tutors
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{studentUrl}}/5/tutors
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
