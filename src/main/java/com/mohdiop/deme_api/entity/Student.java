@@ -6,6 +6,7 @@ import com.mohdiop.deme_api.entity.enumeration.StudentLevel;
 import com.mohdiop.deme_api.entity.enumeration.UserRole;
 import com.mohdiop.deme_api.entity.enumeration.UserState;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -55,6 +56,11 @@ public class Student extends User {
     @Column(nullable = false)
     private Double studentFunds;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @Transient
+    @Size(max = 2)
+    private Set<Tutor> tutors;
+
     @Builder
     public Student(
             Long id,
@@ -72,7 +78,8 @@ public class Student extends User {
             String password,
             String pictureUrl,
             Set<UserRole> roles,
-            UserState state
+            UserState state,
+            Set<Tutor> tutors
     ) {
         super(id, phone, email, password, pictureUrl, roles, LocalDateTime.now(), state);
         this.studentFirstName = firstName;
@@ -84,6 +91,7 @@ public class Student extends User {
         this.studentLevel = level;
         this.studentSpeciality = speciality;
         this.studentFunds = funds;
+        this.tutors = tutors;
     }
 
     public StudentResponse toResponse() {

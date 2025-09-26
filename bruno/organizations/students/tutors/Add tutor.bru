@@ -1,0 +1,15 @@
+meta {
+  name: Add tutor
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{studentUrl}}/tutors
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

@@ -62,6 +62,7 @@ public record CreateStudentRequest(
                 .roles(new HashSet<>(List.of(UserRole.ROLE_STUDENT)))
                 .state(UserState.ACTIVE)
                 .funds(0D)
+                .tutors(new HashSet<>())
                 .build();
     }
 }

@@ -1,10 +1,7 @@
 package com.mohdiop.deme_api.controller;
 
 import com.mohdiop.deme_api.dto.request.creation.CreateOrganizationRequest;
-import com.mohdiop.deme_api.dto.response.NeedResponse;
-import com.mohdiop.deme_api.dto.response.OrganizationResponse;
-import com.mohdiop.deme_api.dto.response.SponsorResponse;
-import com.mohdiop.deme_api.dto.response.StudentResponse;
+import com.mohdiop.deme_api.dto.response.*;
 import com.mohdiop.deme_api.service.*;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -22,13 +19,15 @@ public class AdminController {
     private final StudentService studentService;
     private final UserService userService;
     private final NeedService needService;
+    private final TutorService tutorService;
 
-    public AdminController(SponsorService sponsorService, OrganizationService organizationService, StudentService studentService, UserService userService, NeedService needService) {
+    public AdminController(SponsorService sponsorService, OrganizationService organizationService, StudentService studentService, UserService userService, NeedService needService, TutorService tutorService) {
         this.sponsorService = sponsorService;
         this.organizationService = organizationService;
         this.studentService = studentService;
         this.userService = userService;
         this.needService = needService;
+        this.tutorService = tutorService;
     }
 
     @PostMapping("/register/organizations")
@@ -64,5 +63,10 @@ public class AdminController {
     @GetMapping("/needs")
     public ResponseEntity<List<NeedResponse>> getAllNeeds() {
         return ResponseEntity.ok(needService.getAllNeeds());
+    }
+
+    @GetMapping("/tutors")
+    public ResponseEntity<List<TutorResponse>> getAllTutors() {
+        return ResponseEntity.ok(tutorService.getAllTutors());
     }
 }

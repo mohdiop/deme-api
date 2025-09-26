@@ -1,11 +1,18 @@
 package com.mohdiop.deme_api.entity;
 
+import com.mohdiop.deme_api.dto.response.TutorResponse;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @Table(name = "tutors")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Tutor {
 
     @Id
@@ -29,4 +36,15 @@ public class Tutor {
 
     @Column(nullable = false)
     private String tutorAddress;
+
+    public TutorResponse toResponse() {
+        return new TutorResponse(
+                student.getUserId(),
+                tutorFirstName,
+                tutorLastName,
+                tutorPhone,
+                tutorEmail,
+                tutorAddress
+        );
+    }
 }
