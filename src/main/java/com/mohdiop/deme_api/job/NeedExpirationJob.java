@@ -1,4 +1,4 @@
-package com.mohdiop.deme_api.component;
+package com.mohdiop.deme_api.job;
 
 import com.mohdiop.deme_api.repository.NeedRepository;
 import org.springframework.scheduling.annotation.Scheduled;

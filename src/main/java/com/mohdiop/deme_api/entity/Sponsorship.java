@@ -1,15 +1,22 @@
 package com.mohdiop.deme_api.entity;
 
+import com.mohdiop.deme_api.dto.response.SponsorshipResponse;
 import com.mohdiop.deme_api.entity.enumeration.SponsorshipState;
 import com.mohdiop.deme_api.entity.enumeration.SponsorshipType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
 @Table(name = "sponsorships")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Sponsorship {
 
     @Id
@@ -37,4 +44,15 @@ public class Sponsorship {
     @OneToOne
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
+
+    public SponsorshipResponse toResponse() {
+        return new SponsorshipResponse(
+                sponsor.getUserId(),
+                student.getUserId(),
+                sponsorshipStartedAt,
+                sponsorshipEndAt,
+                sponsorshipType,
+                sponsorshipState
+        );
+    }
 }
