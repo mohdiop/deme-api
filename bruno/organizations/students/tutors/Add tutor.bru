@@ -5,9 +5,18 @@ meta {
 }
 
 post {
-  url: {{studentUrl}}/tutors
-  body: none
+  url: {{studentUrl}}/5/tutors
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+    "firstName": "Arona",
+    "lastName": "Diop",
+    "phoneNumber": "+22380000002",
+    "address": "Thiès, Sénégal"
+  }
 }
 
 settings {

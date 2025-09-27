@@ -5,9 +5,17 @@ meta {
 }
 
 post {
-  url: {{baseUrl
-  body: none
+  url: {{baseUrl}}/sponsorships
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+    "studentId": 3,
+    "type": "IDENTIFIED",
+    "endAt": "2025-09-27T22:56:13.9250388"
+  }
 }
 
 settings {
