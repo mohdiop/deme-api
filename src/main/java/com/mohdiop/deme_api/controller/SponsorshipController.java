@@ -84,7 +84,7 @@ public class SponsorshipController {
         );
     }
 
-    @PreAuthorize("hasAnyRole('ORGANIZATION', 'STUDENT')")
+    @PreAuthorize("hasAnyRole('ORGANIZATION', 'STUDENT', 'SPONSOR')")
     @GetMapping("/{studentId}")
     public ResponseEntity<SponsorshipResponse> getSponsorshipByStudentId(
             @PathVariable Long studentId

@@ -41,7 +41,7 @@ public class Sponsorship {
     @JoinColumn(name = "sponsor_id", nullable = false)
     private Sponsor sponsor;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 

@@ -5,9 +5,15 @@ meta {
 }
 
 patch {
-  url: {{studentUrl}}/tutors
-  body: none
+  url: {{studentUrl}}/tutors/1
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+    "email": "arona@gmail.com"
+  }
 }
 
 settings {

@@ -1,14 +1,21 @@
 package com.mohdiop.deme_api.entity;
 
+import com.mohdiop.deme_api.dto.response.PaymentResponse;
 import com.mohdiop.deme_api.entity.enumeration.PaymentType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
 @Table(name = "payments")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Payment {
 
     @Id
@@ -37,4 +44,18 @@ public class Payment {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sponsorship_id", nullable = false)
     private Sponsorship sponsorship;
+
+    public PaymentResponse toResponse() {
+        return
+                new PaymentResponse(
+                        paymentId,
+                        paymentTransactionId,
+                        sponsorship.getSponsorshipId(),
+                        paymentType,
+                        paymentDate,
+                        paymentAmount,
+                        paymentCurrency,
+                        paymentEquivalenceXOF
+                );
+    }
 }

@@ -24,6 +24,7 @@ public record StudentResponse(
         String email,
         Set<UserRole> roles,
         UserState state,
-        LocalDateTime createdAt
+        LocalDateTime createdAt,
+        Double funds
 ) {
 }

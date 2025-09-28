@@ -21,8 +21,9 @@ public class AdminController {
     private final NeedService needService;
     private final TutorService tutorService;
     private final SponsorshipService sponsorshipService;
+    private final PaymentService paymentService;
 
-    public AdminController(SponsorService sponsorService, OrganizationService organizationService, StudentService studentService, UserService userService, NeedService needService, TutorService tutorService, SponsorshipService sponsorshipService) {
+    public AdminController(SponsorService sponsorService, OrganizationService organizationService, StudentService studentService, UserService userService, NeedService needService, TutorService tutorService, SponsorshipService sponsorshipService, PaymentService paymentService) {
         this.sponsorService = sponsorService;
         this.organizationService = organizationService;
         this.studentService = studentService;
@@ -30,6 +31,7 @@ public class AdminController {
         this.needService = needService;
         this.tutorService = tutorService;
         this.sponsorshipService = sponsorshipService;
+        this.paymentService = paymentService;
     }
 
     @PostMapping("/register/organizations")
@@ -75,5 +77,10 @@ public class AdminController {
     @GetMapping("/sponsorships")
     public ResponseEntity<List<SponsorshipResponse>> getAllSponsorships() {
         return ResponseEntity.ok(sponsorshipService.getAllSponsorships());
+    }
+
+    @GetMapping("/payments")
+    public ResponseEntity<List<PaymentResponse>> getAllPayments() {
+        return ResponseEntity.ok(paymentService.getAllPayments());
     }
 }

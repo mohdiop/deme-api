@@ -110,7 +110,8 @@ public class Student extends User {
                 getUserEmail(),
                 getUserRoles(),
                 getUserState(),
-                getUserCreatedAt()
+                getUserCreatedAt(),
+                studentFunds
         );
     }
 }

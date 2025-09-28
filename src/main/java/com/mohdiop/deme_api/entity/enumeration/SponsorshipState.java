@@ -4,5 +4,6 @@ public enum SponsorshipState {
     IN_PROGRESS,
     FROM_TRANSFER,
     STOPPED,
-    FINISHED
+    FINISHED,
+    PENDING
 }

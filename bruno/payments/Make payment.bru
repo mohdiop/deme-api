@@ -1,0 +1,26 @@
+meta {
+  name: Make payment
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/payments
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "transactionId": "H4GJHA42JLKE6783KA",
+    "sponsorshipId": 3,
+    "amount": 100.00,
+    "type": "MOOV_MONEY",
+    "currency": "EUR",
+    "equivalenceXOF": 65000.00
+  }
+}
+
+settings {
+  encodeUrl: true
+}

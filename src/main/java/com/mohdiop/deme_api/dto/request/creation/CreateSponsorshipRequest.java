@@ -27,7 +27,7 @@ public record CreateSponsorshipRequest(
                 .sponsorshipStartedAt(LocalDateTime.now())
                 .sponsorshipEndAt(endAt)
                 .sponsorshipType(type)
-                .sponsorshipState(SponsorshipState.IN_PROGRESS)
+                .sponsorshipState(SponsorshipState.PENDING)
                 .build();
     }
 }

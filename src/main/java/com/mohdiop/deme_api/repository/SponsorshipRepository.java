@@ -20,6 +20,12 @@ public interface SponsorshipRepository extends JpaRepository<Sponsorship, Long> 
             "AND s.sponsorshipEndAt < CURRENT_TIMESTAMP")
     void endSponsorships();
 
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Sponsorship s " +
+            "WHERE s.sponsorshipState = com.mohdiop.deme_api.entity.enumeration.SponsorshipState.PENDING")
+    void deletePendingSponsorships();
+
     Optional<Sponsorship> findByStudentUserIdAndSponsorshipState(Long studentId, SponsorshipState sponsorshipState);
 
     List<Sponsorship> findBySponsorUserId(Long organizationId);
