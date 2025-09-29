@@ -1,0 +1,22 @@
+meta {
+  name: Make transfer
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/funds-transfer
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "fromStudent": 3,
+    "amount": 10000
+  }
+}
+
+settings {
+  encodeUrl: true
+}

@@ -1,6 +1,7 @@
 package com.mohdiop.deme_api.repository;
 
 import com.mohdiop.deme_api.entity.Need;
+import com.mohdiop.deme_api.entity.enumeration.NeedState;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +15,6 @@ public interface NeedRepository extends JpaRepository<Need, Long> {
     void expireNeeds();
 
     List<Need> findByStudentUserId(Long studentId);
+
+    List<Need> findByStudentUserIdAndNeedState(Long studentId, NeedState needState);
 }

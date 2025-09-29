@@ -1,0 +1,25 @@
+meta {
+  name: Validate transfer
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/funds-transfer/7/validate
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0IiwidHlwZSI6IkFDQ0VTU19UT0tFTiIsInJvbGVzIjpbIlJPTEVfU1BPTlNPUiJdLCJpYXQiOjE3NTkxNjA5ODIsImV4cCI6MTc1OTE3ODk4Mn0.gP6NBAT4_6XQTMaw3e81yn9wG9ZREwGt9TLYDNqCK7g
+}
+
+body:json {
+  {
+    "toStudent": 3
+  }
+}
+
+settings {
+  encodeUrl: true
+}

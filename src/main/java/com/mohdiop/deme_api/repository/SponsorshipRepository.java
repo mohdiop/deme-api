@@ -15,7 +15,7 @@ public interface SponsorshipRepository extends JpaRepository<Sponsorship, Long> 
     @Transactional
     @Query("UPDATE Sponsorship s " +
             "SET s.sponsorshipState = com.mohdiop.deme_api.entity.enumeration.SponsorshipState.FINISHED " +
-            "WHERE (s.sponsorshipState = com.mohdiop.deme_api.entity.enumeration.SponsorshipState.IN_PROGRESS" +
+            "WHERE (s.sponsorshipState = com.mohdiop.deme_api.entity.enumeration.SponsorshipState.PENDING" +
             " OR s.sponsorshipState = com.mohdiop.deme_api.entity.enumeration.SponsorshipState.FROM_TRANSFER)" +
             "AND s.sponsorshipEndAt < CURRENT_TIMESTAMP")
     void endSponsorships();
