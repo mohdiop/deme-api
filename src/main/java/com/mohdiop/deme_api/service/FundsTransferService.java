@@ -4,13 +4,11 @@ import com.mohdiop.deme_api.dto.request.creation.MakeFundsTransferRequest;
 import com.mohdiop.deme_api.dto.response.FundsTransferResponse;
 import com.mohdiop.deme_api.entity.FundsTransfer;
 import com.mohdiop.deme_api.entity.Organization;
+import com.mohdiop.deme_api.entity.Sponsorship;
 import com.mohdiop.deme_api.entity.Student;
 import com.mohdiop.deme_api.entity.enumeration.NeedState;
 import com.mohdiop.deme_api.entity.enumeration.TransferState;
-import com.mohdiop.deme_api.repository.FundsTransferRepository;
-import com.mohdiop.deme_api.repository.NeedRepository;
-import com.mohdiop.deme_api.repository.OrganizationRepository;
-import com.mohdiop.deme_api.repository.StudentRepository;
+import com.mohdiop.deme_api.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.apache.coyote.BadRequestException;
@@ -18,6 +16,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class FundsTransferService {
@@ -26,12 +25,16 @@ public class FundsTransferService {
     private final StudentRepository studentRepository;
     private final OrganizationRepository organizationRepository;
     private final NeedRepository needRepository;
+    private final NotificationService notificationService;
+    private final SponsorshipRepository sponsorshipRepository;
 
-    public FundsTransferService(FundsTransferRepository fundsTransferRepository, StudentRepository studentRepository, OrganizationRepository organizationRepository, NeedRepository needRepository) {
+    public FundsTransferService(FundsTransferRepository fundsTransferRepository, StudentRepository studentRepository, OrganizationRepository organizationRepository, NeedRepository needRepository, NotificationService notificationService, SponsorshipRepository sponsorshipRepository) {
         this.fundsTransferRepository = fundsTransferRepository;
         this.studentRepository = studentRepository;
         this.organizationRepository = organizationRepository;
         this.needRepository = needRepository;
+        this.notificationService = notificationService;
+        this.sponsorshipRepository = sponsorshipRepository;
     }
 
     @Transactional
@@ -59,6 +62,11 @@ public class FundsTransferService {
         FundsTransfer fundsTransfer = makeFundsTransferRequest.toFundsTransfer();
         fundsTransfer.setAuthor(author);
         fundsTransfer.setFromStudent(fromStudent);
+        Optional<Sponsorship> sponsorship = sponsorshipRepository.findByStudentUserId(fundsTransfer.getFromStudent().getUserId());
+        sponsorship.ifPresent(value -> notificationService.sendPendingTransferNotifToSponsor(
+                value.getSponsor().getUserId(),
+                fundsTransfer
+        ));
         return fundsTransferRepository.save(fundsTransfer).toResponse();
     }
 

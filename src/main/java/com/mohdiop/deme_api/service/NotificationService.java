@@ -2,10 +2,7 @@ package com.mohdiop.deme_api.service;
 
 import com.mohdiop.deme_api.dto.request.creation.SendNotificationRequest;
 import com.mohdiop.deme_api.dto.response.NotificationResponse;
-import com.mohdiop.deme_api.entity.Notification;
-import com.mohdiop.deme_api.entity.Sponsorship;
-import com.mohdiop.deme_api.entity.Student;
-import com.mohdiop.deme_api.entity.User;
+import com.mohdiop.deme_api.entity.*;
 import com.mohdiop.deme_api.entity.enumeration.StudentGender;
 import com.mohdiop.deme_api.repository.NotificationRepository;
 import com.mohdiop.deme_api.repository.UserRepository;
@@ -150,6 +147,26 @@ public class NotificationService {
         sendNotification(
                 new SendNotificationRequest(
                         sponsorship.getStudent().getUserId(),
+                        title,
+                        content
+                )
+        );
+    }
+
+    public void sendPendingTransferNotifToSponsor(
+            Long sponsorId,
+            FundsTransfer fundsTransfer
+    ) {
+        String title = "Demande de transfert.";
+        String content = String.format(
+                "Vous avez une nouvelle demande de transfert de %s FCFA de fonds non utilisés de l'élève %s %s à valider.",
+                fundsTransfer.getTransferAmount().toString(),
+                fundsTransfer.getFromStudent().getStudentFirstName(),
+                fundsTransfer.getFromStudent().getStudentLastName()
+        );
+        sendNotification(
+                new SendNotificationRequest(
+                        sponsorId,
                         title,
                         content
                 )
