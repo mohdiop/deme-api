@@ -39,13 +39,13 @@ public class PaymentService {
         Payment payment = makePaymentRequest.toSonsorshiplessPayment();
         if (sponsorship.getSponsorshipState() == SponsorshipState.PENDING) {
             sponsorship.setSponsorshipState(SponsorshipState.IN_PROGRESS);
+            notificationService.sendSponsorshipStartedNotifToOrg(sponsorship, makePaymentRequest.equivalenceXOF());
+            notificationService.sendSponsorshipStartedNotifToStudent(sponsorship);
         }
         Double currentFunds = sponsorship.getStudent().getStudentFunds();
         sponsorship.getStudent().setStudentFunds(
                 currentFunds + makePaymentRequest.equivalenceXOF()
         );
-        notificationService.sendSponsorshipStartedNotifToOrg(sponsorship);
-        notificationService.sendSponsorshipStartedNotifToStudent(sponsorship);
         sponsorshipRepository.save(sponsorship);
         payment.setSponsorship(sponsorship);
         return paymentRepository.save(payment).toResponse();

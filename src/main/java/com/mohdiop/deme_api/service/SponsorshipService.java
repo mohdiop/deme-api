@@ -21,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 @Service
 public class SponsorshipService {
@@ -54,12 +55,18 @@ public class SponsorshipService {
                 .orElseThrow(
                         () -> new EntityNotFoundException("Elève introuvable.")
                 );
-        if (sponsorshipRepository.findByStudentUserIdAndSponsorshipState(
-                createSponsorshipRequest.studentId(),
-                SponsorshipState.IN_PROGRESS).isPresent()) {
-            throw new EntityExistsException(String.format(
-                    "Elève déjà %s.", notificationService.getSponsoredText(student.getStudentGender())
-            ));
+        Optional<Sponsorship> potentialSponsorship = sponsorshipRepository.findByStudentUserId(
+                createSponsorshipRequest.studentId()
+        );
+        if (potentialSponsorship.isPresent()) {
+            Sponsorship sponsorship = potentialSponsorship.get();
+            if (
+                    sponsorship.getSponsorshipState() == SponsorshipState.IN_PROGRESS
+                            || sponsorship.getSponsorshipState() == SponsorshipState.FROM_TRANSFER
+                            || sponsorship.getSponsorshipState() == SponsorshipState.PENDING
+            ) {
+                throw new EntityExistsException("Elève indisponible pour parrainage.");
+            }
         }
         Sponsorship sponsorship = createSponsorshipRequest.toStudentlessAndSponsorlessSponsorship();
         sponsorship.setSponsor(sponsor);

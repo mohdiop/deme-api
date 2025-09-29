@@ -54,6 +54,7 @@ public class Need {
 
     public NeedResponse toResponse() {
         return new NeedResponse(
+                needId,
                 student.getUserId(),
                 needDescription,
                 neededAmount,

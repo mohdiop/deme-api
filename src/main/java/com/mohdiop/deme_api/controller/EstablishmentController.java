@@ -47,6 +47,7 @@ public class EstablishmentController {
         );
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping
     public ResponseEntity<List<EstablishmentResponse>> getAllEstablishments() {
         return ResponseEntity.ok(

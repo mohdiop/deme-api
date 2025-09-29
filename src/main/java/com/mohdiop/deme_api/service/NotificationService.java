@@ -25,7 +25,7 @@ public class NotificationService {
     private final UserRepository userRepository;
 
     DateTimeFormatter formatter = DateTimeFormatter
-            .ofPattern("EEEE d MMMM yyyy", Locale.FRENCH);
+            .ofPattern("EEEE d MMMM yyyy 'à' HH:mm", Locale.FRENCH);
 
     public NotificationService(NotificationRepository notificationRepository, UserRepository userRepository) {
         this.notificationRepository = notificationRepository;
@@ -56,7 +56,7 @@ public class NotificationService {
             Student student,
             LocalDateTime endAt
     ) {
-        String title = "Parrainage prolongé.";
+        String title = "Parrainage prolongé";
         String content = String.format(
                 "Le parrainage de votre élève %s %s est prolongé jusqu'au %s",
                 student.getStudentFirstName(),
@@ -91,28 +91,31 @@ public class NotificationService {
     }
 
     public void sendSponsorshipStartedNotifToOrg(
-            Sponsorship sponsorship
+            Sponsorship sponsorship,
+            Double startingAmount
     ) {
         String sponsoredText = getSponsoredText(sponsorship.getStudent().getStudentGender());
-        String title = String.format("Votre élève est %s.", sponsoredText);
+        String title = String.format("Votre élève est %s", sponsoredText);
         String content = "";
         switch (sponsorship.getSponsorshipType()) {
             case ANONYMOUS -> content = String.format(
-                    "Votre élève %s %s a reçu un parrainage anonyme du %s au %s.",
+                    "Votre élève %s %s a reçu un parrainage anonyme du %s au %s - Premier versement de %s FCFA effectué.",
                     sponsorship.getStudent().getStudentFirstName(),
                     sponsorship.getStudent().getStudentLastName(),
                     sponsorship.getSponsorshipStartedAt().format(formatter),
-                    sponsorship.getSponsorshipEndAt().format(formatter)
+                    sponsorship.getSponsorshipEndAt().format(formatter),
+                    startingAmount.toString()
             );
             case IDENTIFIED -> content = String.format(
-                    "Votre élève %s %s est maintenant %s par %s %s du %s au %s.",
+                    "Votre élève %s %s est maintenant %s par %s %s du %s au %s - Premier versement de %s FCFA effectué.",
                     sponsorship.getStudent().getStudentFirstName(),
                     sponsorship.getStudent().getStudentLastName(),
                     sponsoredText,
                     sponsorship.getSponsor().getSponsorFirstName(),
                     sponsorship.getSponsor().getSponsorLastName(),
                     sponsorship.getSponsorshipStartedAt().format(formatter),
-                    sponsorship.getSponsorshipEndAt().format(formatter)
+                    sponsorship.getSponsorshipEndAt().format(formatter),
+                    startingAmount.toString()
             );
         }
         sendNotification(
@@ -127,7 +130,7 @@ public class NotificationService {
     public void sendSponsorshipStartedNotifToStudent(
             Sponsorship sponsorship
     ) {
-        String title = "Nouveau parrainage.";
+        String title = "Nouveau parrainage";
         String content = "";
         switch (sponsorship.getSponsorshipType()) {
             case ANONYMOUS -> content = String.format(

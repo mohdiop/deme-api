@@ -7,6 +7,7 @@ import com.mohdiop.deme_api.entity.enumeration.NeedType;
 import java.time.LocalDateTime;
 
 public record NeedResponse(
+        Long id,
         Long studentId,
         String description,
         Double amount,
