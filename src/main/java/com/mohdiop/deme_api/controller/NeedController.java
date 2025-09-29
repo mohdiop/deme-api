@@ -8,7 +8,10 @@ import com.mohdiop.deme_api.service.NeedService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/organizations/students")
@@ -47,6 +50,16 @@ public class NeedController {
                         needId,
                         updateNeedRequest
                 )
+        );
+    }
+
+    @PreAuthorize("hasAnyRole('SPONSOR','ORGANIZATION', 'SPONSOR')")
+    @GetMapping("/{studentId}/needs")
+    public ResponseEntity<List<NeedResponse>> getStudentNeeds(
+            @PathVariable Long studentId
+    ) {
+        return ResponseEntity.ok(
+                needService.getStudentNeeds(studentId)
         );
     }
 }

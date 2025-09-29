@@ -1,0 +1,23 @@
+meta {
+  name: Create activity
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{studentUrl}}/3/activities
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  name: Basket-ball
+  description: Le samedi 27 septembre, 
+  studentWords: J'ai toujours aimé faire du basket, avec mon accès à la salle de sport je peux maintenant le faire après les décentes.
+  doneAt: 2025-09-27T12:00:00
+  proof: @file(C:\Users\kalandew28\Downloads\tidiane.png)
+}
+
+settings {
+  encodeUrl: true
+}

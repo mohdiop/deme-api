@@ -1,0 +1,15 @@
+meta {
+  name: Get student activities
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{studentUrl}}/3/activities
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

@@ -1,7 +1,6 @@
 package com.mohdiop.deme_api.entity;
 
 import com.mohdiop.deme_api.dto.response.ExpenseResponse;
-import com.mohdiop.deme_api.dto.response.ProofResponse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,6 +44,10 @@ public class Expense {
     @JoinColumn(name = "proof_id", nullable = false)
     private Proof proof;
 
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "expense")
+    @Transient
+    private Report report;
+
     public ExpenseResponse toResponse() {
         return new ExpenseResponse(
                 expenseId,
@@ -54,13 +57,7 @@ public class Expense {
                 expenseDescription,
                 expenseAmount,
                 expenseMadeAt,
-                new ProofResponse(
-                        proof.getProofId(),
-                        proof.getProofFileType(),
-                        proof.getProofType(),
-                        proof.getProofUrl(),
-                        proof.getProofUploadedAt()
-                )
+                proof.toResponse()
         );
     }
 }

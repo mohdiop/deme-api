@@ -5,18 +5,17 @@ meta {
 }
 
 post {
-  url: {{baseUrl}}/expenses
+  url: {{baseUrl}}/sponsorships/1/expenses
   body: multipartForm
   auth: inherit
 }
 
 body:multipart-form {
-  sponsorshipId: 2
-  needId: 4
+  needId: 1
   name: Frais de scolarité
   description: Paiment des frais de scolarité
   amount: 500000
-  proof: @file(C:\Users\moham\Downloads\ChatGPT Image 21 sept. 2025, 09_14_02.png)
+  proof: @file(C:\Users\kalandew28\Downloads\facture_cheick_tidiane_diop_2025.pdf)
 }
 
 settings {

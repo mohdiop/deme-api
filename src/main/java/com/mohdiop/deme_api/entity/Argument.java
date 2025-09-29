@@ -1,13 +1,20 @@
 package com.mohdiop.deme_api.entity;
 
+import com.mohdiop.deme_api.dto.response.ArgumentResponse;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
 @Table(name = "arguments")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Argument {
 
     @Id
@@ -31,4 +38,24 @@ public class Argument {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, name = "author_id")
     private User author;
+
+    public ArgumentResponse toResponse() {
+        if (proof != null) {
+            return new ArgumentResponse(
+                    argumentId,
+                    author.getUserId(),
+                    argumentBody,
+                    argumentDate,
+                    proof.toResponse()
+            );
+        } else {
+            return new ArgumentResponse(
+                    argumentId,
+                    author.getUserId(),
+                    argumentBody,
+                    argumentDate,
+                    null
+            );
+        }
+    }
 }

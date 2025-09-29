@@ -10,10 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 
 public record CreateExpenseRequest(
-        @NotNull(message = "L'identifiant du parrainage est obligatoire.")
-        @Positive(message = "Identifiant du parrainage invalide.")
-        Long sponsorshipId,
-
         @NotNull(message = "L'identifiant du besoin est obligatoire.")
         @Positive(message = "Identifiant du besoin invalide.")
         Long needId,

@@ -91,6 +91,14 @@ public class NeedService {
         return allNeeds.stream().map(Need::toResponse).toList();
     }
 
+    public List<NeedResponse> getStudentNeeds(
+            Long studentId
+    ) {
+        List<Need> allNeeds = needRepository.findByStudentUserId(studentId);
+        if (allNeeds.isEmpty()) return new ArrayList<>();
+        return allNeeds.stream().map(Need::toResponse).toList();
+    }
+
     public void sendNotificationToSponsorIfExist(
             Long studentId,
             LocalDateTime needExpiresAt

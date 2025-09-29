@@ -1,0 +1,20 @@
+meta {
+  name: Create argument
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/sponsorships/expenses/reports/1/arguments
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  body: Voici le reçu
+  proof: @file(C:\Users\kalandew28\Downloads\facture_cheick_tidiane_diop_2025.pdf)
+}
+
+settings {
+  encodeUrl: true
+}

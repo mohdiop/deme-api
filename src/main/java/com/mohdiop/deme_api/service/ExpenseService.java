@@ -16,6 +16,8 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -36,9 +38,10 @@ public class ExpenseService {
 
     @Transactional
     public ExpenseResponse createExpense(
+            Long sponsorshipId,
             CreateExpenseRequest createExpenseRequest
     ) throws BadRequestException {
-        Sponsorship sponsorship = sponsorshipRepository.findById(createExpenseRequest.sponsorshipId())
+        Sponsorship sponsorship = sponsorshipRepository.findById(sponsorshipId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("Parrainage introuvable.")
                 );
@@ -70,5 +73,27 @@ public class ExpenseService {
         expense.setNeedToSatisfy(need);
         expense.setProof(proof);
         return expenseRepository.save(expense).toResponse();
+    }
+
+    public List<ExpenseResponse> getSponsorshipsExpenses(
+            Long sponsorshipId
+    ) {
+        List<Expense> expenses = expenseRepository.findBySponsorshipSponsorshipId(sponsorshipId);
+        if (expenses.isEmpty()) return new ArrayList<>();
+        return expenses.stream().map(Expense::toResponse).toList();
+    }
+
+    public List<ExpenseResponse> getSponsorExpenses(
+            Long sponsorId
+    ) {
+        List<Expense> expenses = expenseRepository.findBySponsorshipSponsorUserId(sponsorId);
+        if (expenses.isEmpty()) return new ArrayList<>();
+        return expenses.stream().map(Expense::toResponse).toList();
+    }
+
+    public List<ExpenseResponse> getAllExpenses() {
+        List<Expense> expenses = expenseRepository.findAll();
+        if (expenses.isEmpty()) return new ArrayList<>();
+        return expenses.stream().map(Expense::toResponse).toList();
     }
 }

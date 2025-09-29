@@ -1,0 +1,25 @@
+meta {
+  name: Make report
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/sponsorships/expenses/1/reports
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwidHlwZSI6IkFDQ0VTU19UT0tFTiIsInJvbGVzIjpbIlJPTEVfU1RVREVOVCJdLCJpYXQiOjE3NTkxNDUyOTYsImV4cCI6MTc1OTE2MzI5Nn0.HwsswbCVkYCo2lXSSFlNhaEw9Dzf_JhNYD9CGS4i1DU
+}
+
+body:json {
+  {
+    "description": "Le paiement était de 400000 FCFA pas 500000 FCFA"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

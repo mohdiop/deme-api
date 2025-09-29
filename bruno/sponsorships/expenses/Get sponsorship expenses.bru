@@ -1,0 +1,15 @@
+meta {
+  name: Get sponsorship expenses
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/sponsorships/1/expenses
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
