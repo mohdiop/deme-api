@@ -63,6 +63,7 @@ public record CreateStudentRequest(
                 .state(UserState.ACTIVE)
                 .funds(0D)
                 .tutors(new HashSet<>())
+                .reportCards(new HashSet<>())
                 .build();
     }
 }

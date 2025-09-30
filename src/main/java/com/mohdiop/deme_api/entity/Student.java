@@ -60,6 +60,9 @@ public class Student extends User {
     @Size(max = 2)
     private Set<Tutor> tutors;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<ReportCard> reportCards;
+
     @Builder
     public Student(
             Long id,
@@ -78,7 +81,8 @@ public class Student extends User {
             String pictureUrl,
             Set<UserRole> roles,
             UserState state,
-            Set<Tutor> tutors
+            Set<Tutor> tutors,
+            Set<ReportCard> reportCards
     ) {
         super(id, phone, email, password, pictureUrl, roles, LocalDateTime.now(), state);
         this.studentFirstName = firstName;
@@ -91,6 +95,7 @@ public class Student extends User {
         this.studentSpeciality = speciality;
         this.studentFunds = funds;
         this.tutors = tutors;
+        this.reportCards = reportCards;
     }
 
     public StudentResponse toResponse() {

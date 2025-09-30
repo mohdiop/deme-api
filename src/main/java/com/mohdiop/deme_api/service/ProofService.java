@@ -50,7 +50,8 @@ public class ProofService {
                 proofFile,
                 UUID.randomUUID().toString(),
                 proofType,
-                fileType
+                fileType,
+                true
         );
         return proofRepository.save(
                 Proof.builder()

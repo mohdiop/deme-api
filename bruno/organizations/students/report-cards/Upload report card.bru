@@ -1,0 +1,20 @@
+meta {
+  name: Upload report card
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{studentUrl}}/3/report-cards
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  emittedAt: 2025-03-02
+  file: @file(C:\Users\kalandew28\Downloads\bulletin_scolaire_exemple.pdf)
+}
+
+settings {
+  encodeUrl: true
+}

@@ -141,6 +141,14 @@ public class StudentService {
         return allStudents.stream().map(Student::toResponse).toList();
     }
 
+    public List<StudentResponse> getStudentsByOrgId(
+            Long orgId
+    ) {
+        List<Student> allStudents = studentRepository.findByOrganizationUserId(orgId);
+        if (allStudents.isEmpty()) return new ArrayList<>();
+        return allStudents.stream().map(Student::toResponse).toList();
+    }
+
     public void validatePhoneAndEmailOrThrowException(String phone, String email) {
         if (email != null && userRepository.findByUserEmail(email).isPresent()) {
             throw new EntityExistsException("Email invalide.");

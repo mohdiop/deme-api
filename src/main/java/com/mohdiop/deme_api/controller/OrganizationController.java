@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/organizations")
 public class OrganizationController {
@@ -62,6 +64,15 @@ public class OrganizationController {
                         authenticationService.getCurrentUserId(),
                         studentId,
                         updateStudentBySchoolRequest
+                )
+        );
+    }
+
+    @GetMapping("/students")
+    public ResponseEntity<List<StudentResponse>> getOrganizationStudents() {
+        return ResponseEntity.ok(
+                studentService.getStudentsByOrgId(
+                        authenticationService.getCurrentUserId()
                 )
         );
     }
