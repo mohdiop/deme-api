@@ -4,6 +4,7 @@ import com.mohdiop.deme_api.dto.request.creation.CreateOrganizationRequest;
 import com.mohdiop.deme_api.dto.response.*;
 import com.mohdiop.deme_api.service.*;
 import jakarta.validation.Valid;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +25,9 @@ public class AdminController {
     private final PaymentService paymentService;
     private final ActivityService activityService;
     private final ExpenseService expenseService;
+    private final ReportService reportService;
 
-    public AdminController(SponsorService sponsorService, OrganizationService organizationService, StudentService studentService, UserService userService, NeedService needService, TutorService tutorService, SponsorshipService sponsorshipService, PaymentService paymentService, ActivityService activityService, ExpenseService expenseService) {
+    public AdminController(SponsorService sponsorService, OrganizationService organizationService, StudentService studentService, UserService userService, NeedService needService, TutorService tutorService, SponsorshipService sponsorshipService, PaymentService paymentService, ActivityService activityService, ExpenseService expenseService, ReportService reportService) {
         this.sponsorService = sponsorService;
         this.organizationService = organizationService;
         this.studentService = studentService;
@@ -36,6 +38,7 @@ public class AdminController {
         this.paymentService = paymentService;
         this.activityService = activityService;
         this.expenseService = expenseService;
+        this.reportService = reportService;
     }
 
     @PostMapping("/register/organizations")
@@ -46,6 +49,13 @@ public class AdminController {
                 organizationService.createOrganization(createOrganizationRequest),
                 HttpStatus.CREATED
         );
+    }
+
+    @PostMapping("/users/{userId}/suspend")
+    public ResponseEntity<Record> suspendUser(
+            @PathVariable Long userId
+    ) throws BadRequestException {
+        return ResponseEntity.ok(userService.suspendUser(userId));
     }
 
     @GetMapping("/sponsors")
@@ -96,5 +106,10 @@ public class AdminController {
     @GetMapping("/expenses")
     public ResponseEntity<List<ExpenseResponse>> getAllExpenses() {
         return ResponseEntity.ok(expenseService.getAllExpenses());
+    }
+
+    @GetMapping("/reports")
+    public ResponseEntity<List<ReportResponse>> getAllReports() {
+        return ResponseEntity.ok(reportService.getAllReports());
     }
 }

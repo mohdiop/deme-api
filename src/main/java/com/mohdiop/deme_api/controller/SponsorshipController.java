@@ -74,6 +74,19 @@ public class SponsorshipController {
         );
     }
 
+    @PreAuthorize("hasRole('STUDENT')")
+    @PostMapping("/{sponsorshipId}/change-student-info-accessible")
+    public ResponseEntity<SponsorshipResponse> changeStudentInfoAccessible(
+            @PathVariable Long sponsorshipId
+    ) {
+        return ResponseEntity.ok(
+                sponsorshipService.changeStudentInfoAccessibleState(
+                        sponsorshipId,
+                        authenticationService.getCurrentUserId()
+                )
+        );
+    }
+
     @PreAuthorize("hasRole('SPONSOR')")
     @GetMapping
     public ResponseEntity<List<SponsorshipResponse>> mySponsorships() {

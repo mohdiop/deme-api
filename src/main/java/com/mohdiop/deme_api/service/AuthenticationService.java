@@ -3,10 +3,12 @@ package com.mohdiop.deme_api.service;
 import com.mohdiop.deme_api.dto.request.AuthenticationRequest;
 import com.mohdiop.deme_api.entity.RefreshToken;
 import com.mohdiop.deme_api.entity.User;
+import com.mohdiop.deme_api.entity.enumeration.UserState;
 import com.mohdiop.deme_api.repository.RefreshTokenRepository;
 import com.mohdiop.deme_api.repository.UserRepository;
 import com.mohdiop.deme_api.security.JwtService;
 import io.jsonwebtoken.JwtException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -40,6 +42,9 @@ public class AuthenticationService {
                 .orElseThrow(() -> new BadCredentialsException("Email ou mot de passe incorrect."));
 
         if (BCrypt.checkpw(authenticationRequest.password(), userToAuthenticate.getUserPassword())) {
+            if(userToAuthenticate.getUserState() == UserState.SUSPENDED) {
+                throw new AccessDeniedException("Votre compte est suspendu.");
+            }
             String newAccessToken = jwtService.generateAccessToken(
                     userToAuthenticate.getUserId(),
                     userToAuthenticate.getUserRoles()

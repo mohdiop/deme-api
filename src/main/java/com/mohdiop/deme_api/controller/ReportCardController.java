@@ -7,10 +7,13 @@ import jakarta.validation.Valid;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/v1/organizations/students")
+@RequestMapping("/api/v1")
 public class ReportCardController {
 
     private final ReportCardService reportCardService;
@@ -19,7 +22,7 @@ public class ReportCardController {
         this.reportCardService = reportCardService;
     }
 
-    @PostMapping("/{studentId}/report-cards")
+    @PostMapping("/organizations/students/{studentId}/report-cards")
     public ResponseEntity<ReportCardResponse> uploadReportCard(
             @PathVariable Long studentId,
             @Valid @ModelAttribute UploadReportCardRequest uploadReportCardRequest
@@ -30,6 +33,18 @@ public class ReportCardController {
                         uploadReportCardRequest
                 ),
                 HttpStatus.CREATED
+        );
+    }
+
+    @PreAuthorize("hasRole('SPONSOR')")
+    @GetMapping("/report-cards")
+    public ResponseEntity<List<ReportCardResponse>> getStudentReportCards(
+            @RequestParam("studentId") Long studentId
+    ) {
+        return ResponseEntity.ok(
+                reportCardService.getStudentReportCards(
+                        studentId
+                )
         );
     }
 }

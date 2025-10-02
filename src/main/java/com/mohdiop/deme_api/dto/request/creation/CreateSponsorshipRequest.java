@@ -28,6 +28,7 @@ public record CreateSponsorshipRequest(
                 .sponsorshipEndAt(endAt)
                 .sponsorshipType(type)
                 .sponsorshipState(SponsorshipState.PENDING)
+                .studentInfoAccessible(false)
                 .build();
     }
 }

@@ -37,6 +37,9 @@ public class Sponsorship {
     @Enumerated(EnumType.STRING)
     private SponsorshipState sponsorshipState;
 
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private Boolean studentInfoAccessible;
+
     @ManyToOne
     @JoinColumn(name = "sponsor_id", nullable = false)
     private Sponsor sponsor;
@@ -53,7 +56,8 @@ public class Sponsorship {
                 sponsorshipStartedAt,
                 sponsorshipEndAt,
                 sponsorshipType,
-                sponsorshipState
+                sponsorshipState,
+                studentInfoAccessible
         );
     }
 }

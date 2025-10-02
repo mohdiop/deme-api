@@ -1,0 +1,19 @@
+meta {
+  name: Get student report cards
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/report-cards?studentId=3
+  body: none
+  auth: inherit
+}
+
+params:query {
+  studentId: 3
+}
+
+settings {
+  encodeUrl: true
+}

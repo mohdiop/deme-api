@@ -12,6 +12,7 @@ public record SponsorshipResponse(
         LocalDateTime startedAt,
         LocalDateTime endAt,
         SponsorshipType type,
-        SponsorshipState state
+        SponsorshipState state,
+        Boolean studentInfoAccessible
 ) {
 }

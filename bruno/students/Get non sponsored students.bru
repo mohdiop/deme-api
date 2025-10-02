@@ -1,12 +1,19 @@
 meta {
-  name: sponsors
-  seq: 5
+  name: Get non sponsored students
+  type: http
+  seq: 3
 }
 
-auth {
-  mode: bearer
+get {
+  url: {{baseUrl}}/non-sponsored-students
+  body: none
+  auth: bearer
 }
 
 auth:bearer {
   token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0IiwidHlwZSI6IkFDQ0VTU19UT0tFTiIsInJvbGVzIjpbIlJPTEVfU1BPTlNPUiJdLCJpYXQiOjE3NTkyNTAyNzYsImV4cCI6MTc1OTI2ODI3Nn0.Qbu2JUfpGRJCdKw_deC6PKiwZfNNDvROHf6lmVPh7B0
+}
+
+settings {
+  encodeUrl: true
 }

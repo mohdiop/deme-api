@@ -13,6 +13,7 @@ import com.mohdiop.deme_api.repository.StudentRepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.apache.coyote.BadRequestException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -111,6 +112,21 @@ public class SponsorshipService {
         notificationService.sendSponsorshipExtendedNotifToOrg(sponsorshipToExtend.getStudent(), newEndDate);
         notificationService.sendSponsorshipExtendedNotifToStudent(sponsorshipToExtend.getStudent().getUserId(), newEndDate);
         return sponsorshipRepository.save(sponsorshipToExtend).toResponse();
+    }
+
+    public SponsorshipResponse changeStudentInfoAccessibleState(
+            Long sponsorshipId,
+            Long studentId
+    ) {
+        Sponsorship sponsorship = sponsorshipRepository.findById(sponsorshipId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Parrainage introuvable.")
+                );
+        if (!sponsorship.getStudent().getUserId().equals(studentId)) {
+            throw new AccessDeniedException("Accès non autorisé.");
+        }
+        sponsorship.setStudentInfoAccessible(!sponsorship.getStudentInfoAccessible());
+        return sponsorshipRepository.save(sponsorship).toResponse();
     }
 
     public List<SponsorshipResponse> getSponsorshipsBySponsorId(

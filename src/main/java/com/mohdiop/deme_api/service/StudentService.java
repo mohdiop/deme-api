@@ -5,10 +5,8 @@ import com.mohdiop.deme_api.dto.request.update.UpdateStudentBySchoolRequest;
 import com.mohdiop.deme_api.dto.request.update.UpdateStudentByStudentRequest;
 import com.mohdiop.deme_api.dto.response.StudentResponse;
 import com.mohdiop.deme_api.entity.Student;
-import com.mohdiop.deme_api.repository.EstablishmentRepository;
-import com.mohdiop.deme_api.repository.OrganizationRepository;
-import com.mohdiop.deme_api.repository.StudentRepository;
-import com.mohdiop.deme_api.repository.UserRepository;
+import com.mohdiop.deme_api.entity.enumeration.SponsorshipState;
+import com.mohdiop.deme_api.repository.*;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.access.AccessDeniedException;
@@ -26,51 +24,27 @@ public class StudentService {
     private final OrganizationRepository organizationRepository;
     private final UserRepository userRepository;
     private final EstablishmentRepository establishmentRepository;
+    private final SponsorshipRepository sponsorshipRepository;
 
-    public StudentService(
-            StudentRepository studentRepository,
-            OrganizationRepository organizationRepository,
-            UserRepository userRepository, EstablishmentRepository establishmentRepository
-    ) {
+    public StudentService(StudentRepository studentRepository, OrganizationRepository organizationRepository, UserRepository userRepository, EstablishmentRepository establishmentRepository, SponsorshipRepository sponsorshipRepository) {
         this.studentRepository = studentRepository;
         this.organizationRepository = organizationRepository;
         this.userRepository = userRepository;
         this.establishmentRepository = establishmentRepository;
+        this.sponsorshipRepository = sponsorshipRepository;
     }
 
-    public StudentResponse createStudent(
-            Long organizationId,
-            CreateStudentRequest createStudentRequest
-    ) {
+    public StudentResponse createStudent(Long organizationId, CreateStudentRequest createStudentRequest) {
         validatePhoneAndEmailOrThrowException(createStudentRequest.phone(), createStudentRequest.email());
         var student = createStudentRequest.toOrganizationLessAndEstablishmentLessStudent();
-        student.setOrganization(
-                organizationRepository.findById(organizationId)
-                        .orElseThrow(
-                                () -> new EntityNotFoundException(
-                                        "Organisation introuvable."
-                                )
-                        )
-        );
-        student.setEstablishment(
-                establishmentRepository.findById(createStudentRequest.establishmentId())
-                        .orElseThrow(
-                                () -> new EntityNotFoundException("École introuvable.")
-                        )
-        );
+        student.setOrganization(organizationRepository.findById(organizationId).orElseThrow(() -> new EntityNotFoundException("Organisation introuvable.")));
+        student.setEstablishment(establishmentRepository.findById(createStudentRequest.establishmentId()).orElseThrow(() -> new EntityNotFoundException("École introuvable.")));
         return studentRepository.save(student).toResponse();
     }
 
-    public StudentResponse updateStudentByOrganization(
-            Long organizationId,
-            Long studentId,
-            UpdateStudentBySchoolRequest updateStudentBySchoolRequest
-    ) {
+    public StudentResponse updateStudentByOrganization(Long organizationId, Long studentId, UpdateStudentBySchoolRequest updateStudentBySchoolRequest) {
         validatePhoneAndEmailOrThrowException(updateStudentBySchoolRequest.phone(), updateStudentBySchoolRequest.email());
-        Student studentToUpdate = studentRepository.findById(studentId)
-                .orElseThrow(
-                        () -> new EntityNotFoundException("Elève introuvable.")
-                );
+        Student studentToUpdate = studentRepository.findById(studentId).orElseThrow(() -> new EntityNotFoundException("Elève introuvable."));
         if (!Objects.equals(organizationId, studentToUpdate.getOrganization().getUserId())) {
             throw new AccessDeniedException("Cet(te) élève n'est pas affilié(e) à cette organisation.");
         }
@@ -105,22 +79,14 @@ public class StudentService {
             studentToUpdate.setUserPhone(updateStudentBySchoolRequest.phone());
         }
         if (updateStudentBySchoolRequest.password() != null) {
-            studentToUpdate.setUserPassword(
-                    BCrypt.hashpw(updateStudentBySchoolRequest.password(), BCrypt.gensalt())
-            );
+            studentToUpdate.setUserPassword(BCrypt.hashpw(updateStudentBySchoolRequest.password(), BCrypt.gensalt()));
         }
         return studentRepository.save(studentToUpdate).toResponse();
     }
 
-    public StudentResponse updateByStudent(
-            Long studentId,
-            UpdateStudentByStudentRequest updateStudentByStudentRequest
-    ) {
+    public StudentResponse updateByStudent(Long studentId, UpdateStudentByStudentRequest updateStudentByStudentRequest) {
         validatePhoneAndEmailOrThrowException(updateStudentByStudentRequest.phone(), updateStudentByStudentRequest.email());
-        Student studentToUpdate = studentRepository.findById(studentId)
-                .orElseThrow(
-                        () -> new EntityNotFoundException("Elève introuvable.")
-                );
+        Student studentToUpdate = studentRepository.findById(studentId).orElseThrow(() -> new EntityNotFoundException("Elève introuvable."));
         if (updateStudentByStudentRequest.email() != null) {
             studentToUpdate.setUserEmail(updateStudentByStudentRequest.email());
         }
@@ -128,9 +94,7 @@ public class StudentService {
             studentToUpdate.setUserPhone(updateStudentByStudentRequest.phone());
         }
         if (updateStudentByStudentRequest.password() != null) {
-            studentToUpdate.setUserPassword(
-                    BCrypt.hashpw(updateStudentByStudentRequest.password(), BCrypt.gensalt())
-            );
+            studentToUpdate.setUserPassword(BCrypt.hashpw(updateStudentByStudentRequest.password(), BCrypt.gensalt()));
         }
         return studentRepository.save(studentToUpdate).toResponse();
     }
@@ -141,12 +105,21 @@ public class StudentService {
         return allStudents.stream().map(Student::toResponse).toList();
     }
 
-    public List<StudentResponse> getStudentsByOrgId(
-            Long orgId
-    ) {
+    public List<StudentResponse> getStudentsByOrgId(Long orgId) {
         List<Student> allStudents = studentRepository.findByOrganizationUserId(orgId);
         if (allStudents.isEmpty()) return new ArrayList<>();
         return allStudents.stream().map(Student::toResponse).toList();
+    }
+
+    public List<StudentResponse> getNonSponsoredStudents() {
+        var allStudents = studentRepository.findAll();
+        List<StudentResponse> studentResponses = new ArrayList<>();
+        for (var student : allStudents) {
+            if (sponsorshipRepository.findByStudentUserIdAndSponsorshipState(student.getUserId(), SponsorshipState.FINISHED).isPresent() || sponsorshipRepository.findByStudentUserIdAndSponsorshipState(student.getUserId(), SponsorshipState.STOPPED).isPresent()) {
+                studentResponses.add(student.toResponse());
+            }
+        }
+        return studentResponses;
     }
 
     public void validatePhoneAndEmailOrThrowException(String phone, String email) {

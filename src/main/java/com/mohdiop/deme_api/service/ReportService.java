@@ -13,6 +13,9 @@ import jakarta.persistence.EntityNotFoundException;
 import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ReportService {
 
@@ -59,12 +62,18 @@ public class ReportService {
         if (report.getReportState() == ReportState.CLOSE) {
             throw new BadRequestException("Signalement fermé.");
         }
-        if(reportState == ReportState.CLOSE) {
+        if (reportState == ReportState.CLOSE) {
             if (report.getReportState() != ReportState.OPEN) {
                 throw new BadRequestException("Seul un signalement ouvert peut être fermé.");
             }
         }
         report.setReportState(reportState);
         return reportRepository.save(report).toResponse();
+    }
+
+    public List<ReportResponse> getAllReports() {
+        var allReports = reportRepository.findAll();
+        if (allReports.isEmpty()) return new ArrayList<>();
+        return allReports.stream().map(Report::toResponse).toList();
     }
 }
